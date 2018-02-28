@@ -61,11 +61,6 @@ body {
   grid-template-areas: "h h h" "n n n" ". m ." "f f f";
 }
 
-/* maki */
-.card__icon:before {
-  font-family: 'maki', sans-serif;
-}
-
 .header {
   grid-area: h;
   text-align: center;
@@ -115,8 +110,8 @@ body {
   -ms-flex-pack: center;
   justify-content: center;
   display: grid;
-  grid-template: repeat(4, -webkit-min-content)/repeat(4, -webkit-min-content);
-  grid-template: repeat(4, min-content)/repeat(4, min-content);
+  grid-template: repeat(3, -webkit-min-content)/repeat(6, -webkit-min-content);
+  grid-template: repeat(3, min-content)/repeat(6, min-content);
   grid-gap: 1em;
 }
 
@@ -191,8 +186,7 @@ body {
   transform: rotateY(180deg);
 }
 
-.card__icon {
-  font-size: 3.5rem;
+.card__front {
   pointer-events: none;
   margin-bottom: 1rem;
 }

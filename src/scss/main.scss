@@ -48,11 +48,6 @@ body {
     "f f f";
 }
 
-/* maki */
-.card__icon:before {
-  font-family: 'maki', sans-serif;
-}
-
 // *****************
 // HEADER
 // *****************
@@ -107,7 +102,7 @@ body {
   width: 100%;
   justify-content: center;
   display: grid;
-  grid-template: repeat(4, min-content) / repeat(4, min-content);
+  grid-template: repeat(3, min-content) / repeat(6, min-content);
   grid-gap: 1em;
 }
 
@@ -163,8 +158,7 @@ body {
   transform: rotateY( 180deg );
 }
 
-.card__icon {
-  font-size:$font-icon;
+.card__front {
   pointer-events: none;
   margin-bottom: 1rem;
 }

@@ -1,52 +1,88 @@
 /* eslint-env browser */
 
 const cards = document.querySelectorAll('.main__card');
-const cardsIcons = document.querySelectorAll('.card__icon');
+const cardFront = document.querySelectorAll('.card__front');
 const buttonNewGame = document.querySelector('.main__new-game');
 const numberOfTurns = document.querySelector('.main__turns');
 
 
-// Shuffle cards
-const shuffleCards = () => {
-  const indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const classNames = ['maki-airport', 'maki-art-gallery', 'maki-bar', 'maki-baseball', 'maki-cinema', 'maki-college', 'maki-harbor', 'maki-town-hall'];
-
-  // Function to shuffle cards indexes
-  const shuffleArray = (array) => {
-    const output = array.slice(0);
-    for (let i = array.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = output[i];
-      output[i] = output[j];
-      output[j] = temp;
-    }
-    return output;
-  };
-
-  const randomCardsIndexes = shuffleArray(indexes);
-
-  // Applying icons to random indexes
-  randomCardsIndexes.forEach((randomIndex, i) => {
-    if (i % 2 === 0) {
-      cardsIcons[randomIndex].className = `card__icon ${classNames[i / 2]}`;
-    } else {
-      cardsIcons[randomIndex].className = `card__icon ${classNames[(i - 1) / 2]}`;
-    }
-  });
-};
-
-// Print number of moves
-const printMoves = (num) => {
-  numberOfTurns.textContent = num + (num === 1 ? ' Move' : ' Moves');
-};
-
-// IIFE for a local scope for a new game
+// IIFE for a local scope for a game
 (function autorun() {
+  // ============
+  // Total number of shown pairs of cards can be easily changed
+  // Remember to change main.scss => .main__board => grid size
+  // ============
+  const numberOfPairs = 9;
+
   let activeCard = null;
   let movesNumber = 0;
   let canClick = true; // to prevent clicking on another cards while animation
 
-  // On card click
+  // Make an array of x (depends on pairs of cards on the desk) random indexes of cards.
+  // These indexes will be grabbed from the cardDeck array to make a new set every new game.
+  const randomIndexesOfCards = (pairsNum) => {
+    const outputArray = [];
+
+    // Looping until needed number of random indexes is obtained
+    while (outputArray.length < pairsNum) {
+      const tempRandomNumber = Math.floor(Math.random() * 52); // 52 - is a number of cards + 1
+      if (!outputArray.includes(tempRandomNumber)) outputArray.push(tempRandomNumber);
+    }
+    return outputArray;
+  };
+
+
+  // Function to make an array of randomly picked pairs on the desk
+  // Every next two numbers numbers is a pair
+  const randomIndexesOfPairs = (pairsNum) => {
+    const cardsNum = pairsNum * 2;
+    const outputArray = [];
+
+    // Looping until needed number of random indexes is obtained
+    while (outputArray.length < cardsNum) {
+      const tempRandomNumber = Math.floor(Math.random() * (cardsNum + 1));
+      if (!outputArray.includes(tempRandomNumber)) outputArray.push(tempRandomNumber);
+    }
+    return outputArray;
+  };
+
+
+  // Make the array of cards' filenames. This's an unnecessary step.
+  // All these names could be added manually.
+  const cardDeck = (function filenames() {
+    const extension = '.png';
+    const array = [];
+    const suites = ['C', 'D', 'H', 'S'];
+    for (let i = 1; i < 14; i += 1) {
+      suites.forEach((suite) => {
+        switch (i) {
+          case 1:
+            array.push(`A${suite}${extension}`);
+            break;
+          case 11:
+            array.push(`J${suite}${extension}`);
+            break;
+          case 12:
+            array.push(`Q${suite}${extension}`);
+            break;
+          case 13:
+            array.push(`K${suite}${extension}`);
+            break;
+          default:
+            array.push(`${i}${suite}${extension}`);
+            break;
+        }
+      });
+    }
+    return array;
+  }());
+
+  // Print number of moves
+  const printMoves = (num) => {
+    numberOfTurns.textContent = num + (num === 1 ? ' Move' : ' Moves');
+  };
+
+  // Function on card click
   const clicked = (e) => {
     if (activeCard && canClick) {
       // Every click after selecting any card will be counted as one move
@@ -124,13 +160,15 @@ const printMoves = (num) => {
     }
   };
 
-  // New game
+  // Function to start a New game
   const newGame = () => {
     activeCard = null;
     movesNumber = 0;
 
-    // Calling functions to start the game
-    shuffleCards();
+    // Set randomly picked pairs of cards
+    randomCardsArray = randomIndexesOfPairs(numberOfPairs);
+
+    // Set number of moves to 0
     printMoves(movesNumber);
 
     // Remove all temporary classes and showing cards for 3 seconds

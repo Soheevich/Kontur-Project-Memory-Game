@@ -9,8 +9,8 @@ const babel = require('gulp-babel');
 gulp.task('compress', (cb) => {
   pump(
     [gulp.src('src/scripts/*.js'),
-      babel({ presets: ['env'] }),
-      uglify({ output: { quote_style: 1 } }),
+      // babel({ presets: ['env'] }),
+      // uglify({ output: { quote_style: 1 } }),
       rename({ suffix: '-min' }),
       gulp.dest('build/scripts')],
     cb,
