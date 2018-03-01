@@ -219,15 +219,18 @@ let cardsFront;
 
     // Add card images. It iterates through every index of pairs array,
     // then take a random card index from the randomCardsIndexes and add src to the every card.
+            console.log(cardsFront);
+            console.log('randomPairsArray is' + randomPairsArray);
     randomPairsArray.forEach((randomPair, index) => {
       if (index % 2 === 0) {
-        console.log(cardsFront);
-        console.log('randomPairsArray is' + randomPairsArray);
-        console.log(randomPair);
-        const randomCardIndex = randomCardsIndexesArray[index];
+        console.log(`randomPair is ${randomPair}`);
+        const randomCardIndex = randomCardsIndexesArray[index / 2];
+        console.log(`randomCardIndex is ${randomCardIndex}`);
         cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
       } else {
-        const randomCardIndex = randomCardsIndexesArray[index - 1];
+        console.log(`randomPair is ${randomPair}`);
+        const randomCardIndex = randomCardsIndexesArray[(index - 1) / 2];
+        console.log(`randomCardIndex is ${randomCardIndex}`);
         cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
       }
     });
