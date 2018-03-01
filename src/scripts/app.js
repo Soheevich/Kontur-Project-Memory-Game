@@ -85,23 +85,23 @@
     for (let i = 0; i < totalCards; i += 1) {
       const mainCardWrapper = document.createElement('div');
       const mainCard = document.createElement('div');
-      const cardFront = document.createElement('div');
-      const cardFrontIcon = document.createElement('img');
       const cardBack = document.createElement('div');
       const cardBackIcon = document.createElement('img');
+      const cardFront = document.createElement('div');
+      const cardFrontIcon = document.createElement('img');
 
       mainCardWrapper.classList.add('main__card-wrapper');
       mainCard.classList.add('main__card');
-      cardFront.classList.add('card__front');
-      cardFrontIcon.classList.add('card__icon');
       cardBack.classList.add('card__back');
       cardBackIcon.classList.add('card__icon-back');
       cardBackIcon.src = 'images/card_back.png';
+      cardFront.classList.add('card__front');
+      cardFrontIcon.classList.add('card__icon');
 
-      cardFront.appendChild(cardFrontIcon);
-      mainCard.appendChild(cardFront);
       cardBack.appendChild(cardBackIcon);
       mainCard.appendChild(cardBack);
+      cardFront.appendChild(cardFrontIcon);
+      mainCard.appendChild(cardFront);
       mainCardWrapper.appendChild(mainCard);
       documentFragment.appendChild(mainCardWrapper);
     }
