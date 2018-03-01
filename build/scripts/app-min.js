@@ -51,26 +51,26 @@ let cardsFront;
   // Make the array of cards' filenames.
   // This's an unnecessary step. All these names could be added manually.
   const cardDeck = (function filenames() {
-    const extension = '.png';
+    const extension = '.svg';
     const array = [];
-    const suites = ['C', 'D', 'H', 'S'];
+    const suites = ['clubs', 'diamonds', 'hearts', 'spades'];
     for (let i = 1; i < 14; i += 1) {
       suites.forEach((suite) => {
         switch (i) {
           case 1:
-            array.push(`A${suite}${extension}`);
+            array.push(`ace_of_${suite}${extension}`);
             break;
           case 11:
-            array.push(`J${suite}${extension}`);
+            array.push(`jack_of_${suite}${extension}`);
             break;
           case 12:
-            array.push(`Q${suite}${extension}`);
+            array.push(`queen_of_${suite}${extension}`);
             break;
           case 13:
-            array.push(`K${suite}${extension}`);
+            array.push(`king_of_${suite}${extension}`);
             break;
           default:
-            array.push(`${i}${suite}${extension}`);
+            array.push(`${i}_of_${suite}${extension}`);
             break;
         }
       });
