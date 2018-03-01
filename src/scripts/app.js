@@ -3,7 +3,7 @@
 // IIFE for a local scope for a game
 (function autorun() {
   const buttonNewGame = document.querySelector('.main__new-game');
-  const numberOfTurns = document.querySelector('.main__turns');
+  const pointsNumber = document.querySelector('.main__points');
   const board = document.querySelector('.main__board');
   let cardsFront;
   let cards;
@@ -15,8 +15,36 @@
   const numberOfPairs = 9;
 
   let activeCard = null;
-  let movesNumber = 0;
   let canClick = true; // to prevent clicking on another cards while animation
+
+
+  // Function to print total amount of points
+  const pointsCounter = {
+    points: 0,
+    openedPairs: 0,
+    get finalPoints() {
+      return this.points;
+    },
+    reset() {
+      this.points = 0;
+      this.openedPairs = 0;
+    },
+    counting(direction) {
+      if (direction === 'plus') {
+        this.openedPairs += 1;
+        this.points += (numberOfPairs - this.openedPairs) * 42;
+      } else if (direction === 'minus') {
+        this.points -= (numberOfPairs - this.openedPairs) * 42;
+      }
+    },
+  };
+
+
+  // Function to print total points
+  const printPoints = (number) => {
+    pointsNumber.textContent = number;
+  };
+
 
   // Function to make an array of 9 (depends on numberOfPairs variable) random indexes of cards.
   // These indexes will be taken from the cardDeck array to make a new set of cards every new game.
@@ -109,12 +137,6 @@
   };
 
 
-  // Print number of moves
-  const printMoves = (num) => {
-    numberOfTurns.textContent = num + (num === 1 ? ' Move' : ' Moves');
-  };
-
-
   // Function on card click
   const clicked = (e) => {
     if (activeCard && canClick) {
@@ -125,19 +147,23 @@
         activeCard.classList.remove('card__flipped');
         canClick = false;
         activeCard = null;
-        movesNumber += 1;
-        printMoves(movesNumber);
+        pointsCounter.counting('minus');
+        printPoints(pointsCounter.finalPoints);
+
         setTimeout(() => {
           canClick = true;
         }, 300);
 
-        // Got a pair, it'll mark them and mute event listeners
+        // Got a pair, it'll mark both cards and mute event listeners
       } else if (
         e.target.querySelector('.card__icon').src ===
           activeCard.querySelector('.card__icon').src
       ) {
         e.target.classList.add('card__flipped');
         canClick = false;
+        pointsCounter.counting('plus');
+        printPoints(pointsCounter.finalPoints);
+
         setTimeout(() => {
           e.target.classList.add('shake');
           activeCard.classList.add('shake');
@@ -148,13 +174,13 @@
         }, 700);
         e.target.classList.add('card__no-events'); // This class will mute any eventListener
         activeCard.classList.add('card__no-events');
-        movesNumber += 1;
-        printMoves(movesNumber);
 
         // Wrong pair, remove selection from the both cards
       } else {
         e.target.classList.add('card__flipped');
         canClick = false;
+        pointsCounter.counting('minus');
+        printPoints(pointsCounter.finalPoints);
 
         /* Somehow 'shake' and 'card__flipped' transforms are interacting.
           So I made an extra setTimeout with 100ms to prevent bugs.
@@ -177,9 +203,6 @@
             }, 100);
           }, 700);
         }, 700);
-
-        movesNumber += 1;
-        printMoves(movesNumber);
       }
 
       // Mark a card as selected one
@@ -193,6 +216,7 @@
     }
   };
 
+
   // Function to start a New game
   const newGame = () => {
     // Set randomly picked pairs of cards
@@ -201,9 +225,9 @@
     // Set randomly picked indexes of cards
     const randomCardsIndexesArray = randomIndexesOfCards(numberOfPairs);
 
-    // Reset number of moves and active card
+    // Reset number of points, opened pairs and active card
     activeCard = null;
-    movesNumber = 0;
+    pointsCounter.reset();
 
     cardsFront = document.querySelectorAll('.card__icon');
     // Remove all cards
@@ -227,9 +251,6 @@
         cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
       }
     });
-
-    // Set number of moves to 0
-    printMoves(movesNumber);
 
     // Cards variable can be assigned only after adding cards to DOM
     cards = document.querySelectorAll('.main__card');
@@ -256,6 +277,9 @@
         }, 2000); // number of milliseconds to show the cards at the start of the game
       }, 0);
     });
+
+    // Print number of points
+    printPoints(pointsCounter.finalPoints);
   };
 
   // Clicking on New Game button
