@@ -19,8 +19,8 @@ let cardsFront;
   let movesNumber = 0;
   let canClick = true; // to prevent clicking on another cards while animation
 
-  // Make an array of 9 (depends on pairs of cards on the desk) random indexes of cards.
-  // These indexes will be grabbed from the cardDeck array to make a new set every new game.
+  // Function to make an array of 9 (depends on numberOfPairs variable) random indexes of cards.
+  // These indexes will be taken from the cardDeck array to make a new set of cards every new game.
   const randomIndexesOfCards = (pairsNum) => {
     const outputArray = [];
 
@@ -33,7 +33,7 @@ let cardsFront;
   };
 
 
-  // Function to make an array of randomly picked pairs on the desk
+  // Function to make an array of randomly picked 9 pairs (numberOfPairs variable) on the desk
   // Every next two numbers numbers in the array is a pair
   const randomIndexesOfPairs = (pairsNum) => {
     const cardsNum = pairsNum * 2;
@@ -194,7 +194,7 @@ let cardsFront;
   // Function to start a New game
   const newGame = () => {
     // Set randomly picked pairs of cards
-    const randomCardsArray = randomIndexesOfPairs(numberOfPairs);
+    const randomPairsArray = randomIndexesOfPairs(numberOfPairs);
 
     // Set randomly picked indexes of cards
     const randomCardsIndexesArray = randomIndexesOfCards(numberOfPairs);
