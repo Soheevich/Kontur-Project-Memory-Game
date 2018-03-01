@@ -87,17 +87,21 @@ let cardsFront;
       const mainCardWrapper = document.createElement('div');
       const mainCard = document.createElement('div');
       const cardFront = document.createElement('div');
-      const cardIcon = document.createElement('img');
+      const cardFrontIcon = document.createElement('img');
       const cardBack = document.createElement('div');
+      const cardBackIcon = document.createElement('img');
 
       mainCardWrapper.classList.add('main__card-wrapper');
       mainCard.classList.add('main__card');
       cardFront.classList.add('card__front');
-      cardIcon.classList.add('card__icon');
+      cardFrontIcon.classList.add('card__icon');
       cardBack.classList.add('card__back');
+      cardBackIcon.classList.add('card__icon-back');
+      cardBackIcon.src = 'images/card_back.svg';
 
-      cardFront.appendChild(cardIcon);
+      cardFront.appendChild(cardFrontIcon);
       mainCard.appendChild(cardFront);
+      cardBack.appendChild(cardBackIcon);
       mainCard.appendChild(cardBack);
       mainCardWrapper.appendChild(mainCard);
       documentFragment.appendChild(mainCardWrapper);
@@ -219,18 +223,12 @@ let cardsFront;
 
     // Add card images. It iterates through every index of pairs array,
     // then take a random card index from the randomCardsIndexes and add src to the every card.
-            console.log(cardsFront);
-            console.log('randomPairsArray is' + randomPairsArray);
     randomPairsArray.forEach((randomPair, index) => {
       if (index % 2 === 0) {
-        console.log(`randomPair is ${randomPair}`);
         const randomCardIndex = randomCardsIndexesArray[index / 2];
-        console.log(`randomCardIndex is ${randomCardIndex}`);
         cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
       } else {
-        console.log(`randomPair is ${randomPair}`);
         const randomCardIndex = randomCardsIndexesArray[(index - 1) / 2];
-        console.log(`randomCardIndex is ${randomCardIndex}`);
         cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
       }
     });
