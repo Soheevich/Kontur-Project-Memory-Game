@@ -55,6 +55,8 @@ body {
 .grid {
   max-width: 100%;
   max-height: 100%;
+  min-height: 100vh;
+  min-width: 100vw;
   display: grid;
   grid-template: repeat(4, auto)/auto minmax(-webkit-min-content, 75vw) auto;
   grid-template: repeat(4, auto)/auto minmax(min-content, 75vw) auto;
@@ -123,27 +125,19 @@ img {
   position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: block;
   width: 130px;
-  height: -webkit-min-content;
-  height: -moz-min-content;
-  height: min-content;
+  margin: 0 auto;
   -webkit-perspective: 1200px;
   perspective: 1200px;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .main__card {
   position: absolute;
+  top: 0;
+  bottom: 0;
+  display: block;
   width: 100%;
-  height: 100%;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-transition: -webkit-transform 0.7s;
@@ -154,9 +148,10 @@ img {
 
 .card__front, .card__back {
   position: absolute;
+  top: 0;
+  bottom: 0;
   display: block;
   width: 100%;
-  height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   pointer-events: none;
@@ -166,22 +161,12 @@ img {
   background: #ff0080;
   -webkit-box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
   box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
-  border-bottom: 1px solid #ff66b3;
 }
 
 .card__back {
   background: #7700ff;
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   -webkit-box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
   box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
   border-bottom: 1px solid #ad66ff;
@@ -190,11 +175,6 @@ img {
 .card__flipped {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-}
-
-.card__front {
-  pointer-events: none;
-  margin-bottom: 1rem;
 }
 
 .card__no-events {
