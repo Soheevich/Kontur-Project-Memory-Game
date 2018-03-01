@@ -1,9 +1,10 @@
 /* eslint-env browser */
 
 const cards = document.querySelectorAll('.main__card');
-const cardFront = document.querySelectorAll('.card__front');
 const buttonNewGame = document.querySelector('.main__new-game');
 const numberOfTurns = document.querySelector('.main__turns');
+const board = document.querySelector('.main__board');
+let cardsFront;
 
 
 // IIFE for a local scope for a game
@@ -18,7 +19,7 @@ const numberOfTurns = document.querySelector('.main__turns');
   let movesNumber = 0;
   let canClick = true; // to prevent clicking on another cards while animation
 
-  // Make an array of x (depends on pairs of cards on the desk) random indexes of cards.
+  // Make an array of 9 (depends on pairs of cards on the desk) random indexes of cards.
   // These indexes will be grabbed from the cardDeck array to make a new set every new game.
   const randomIndexesOfCards = (pairsNum) => {
     const outputArray = [];
@@ -33,7 +34,7 @@ const numberOfTurns = document.querySelector('.main__turns');
 
 
   // Function to make an array of randomly picked pairs on the desk
-  // Every next two numbers numbers is a pair
+  // Every next two numbers numbers in the array is a pair
   const randomIndexesOfPairs = (pairsNum) => {
     const cardsNum = pairsNum * 2;
     const outputArray = [];
@@ -47,8 +48,8 @@ const numberOfTurns = document.querySelector('.main__turns');
   };
 
 
-  // Make the array of cards' filenames. This's an unnecessary step.
-  // All these names could be added manually.
+  // Make the array of cards' filenames.
+  // This's an unnecessary step. All these names could be added manually.
   const cardDeck = (function filenames() {
     const extension = '.png';
     const array = [];
@@ -77,17 +78,47 @@ const numberOfTurns = document.querySelector('.main__turns');
     return array;
   }());
 
+  // Function to create needed number of cards in the DOM
+  const pushCardsInDom = (num) => {
+    const documentFragment = document.createDocumentFragment();
+    const totalCards = num * 2;
+
+    for (let i = 0; i < totalCards; i += 1) {
+      const mainCardWrapper = document.createElement('div');
+      const mainCard = document.createElement('div');
+      const cardBack = document.createElement('div');
+      const cardIcon = document.createElement('img');
+      const s = document.createElement('div');
+
+      mainCardWrapper.classList.add('main__card-wrapper');
+      mainCard.classList.add('main__card');
+      cardBack.classList.add('card__back');
+      cardIcon.classList.add('card__icon');
+      s.classList.add('card__front');
+
+      cardBack.appendChild(cardIcon);
+      mainCard.appendChild(cardBack);
+      mainCard.appendChild(s);
+      mainCardWrapper.appendChild(mainCard);
+      documentFragment.appendChild(mainCardWrapper);
+    }
+
+    board.appendChild(documentFragment);
+  };
+
+
   // Print number of moves
   const printMoves = (num) => {
     numberOfTurns.textContent = num + (num === 1 ? ' Move' : ' Moves');
   };
+
 
   // Function on card click
   const clicked = (e) => {
     if (activeCard && canClick) {
       // Every click after selecting any card will be counted as one move
 
-      // Clicking on the same card will remove its selection
+      // Clicking on the same card will remove its selection and flip it
       if (e.target === activeCard) {
         activeCard.classList.remove('card__flipped');
         canClick = false;
@@ -98,7 +129,7 @@ const numberOfTurns = document.querySelector('.main__turns');
           canClick = true;
         }, 300);
 
-        // Got a pair, it'll mark them and remove event listeners
+        // Got a pair, it'll mark them and mute event listeners
       } else if (
         e.target.querySelector('.card__icon').className ===
           activeCard.querySelector('.card__icon').className
@@ -113,7 +144,7 @@ const numberOfTurns = document.querySelector('.main__turns');
             canClick = true;
           }, 300);
         }, 700);
-        e.target.classList.add('card__no-events');
+        e.target.classList.add('card__no-events'); // This class will mute any eventListener
         activeCard.classList.add('card__no-events');
         movesNumber += 1;
         printMoves(movesNumber);
@@ -162,11 +193,28 @@ const numberOfTurns = document.querySelector('.main__turns');
 
   // Function to start a New game
   const newGame = () => {
+    // Set randomly picked pairs of cards
+    const randomCardsArray = randomIndexesOfPairs(numberOfPairs);
+
+    // Set randomly picked indexes of cards
+    const randomCardsIndexesArray = randomIndexesOfCards(numberOfPairs);
+
+    // Reset number of moves and active card
     activeCard = null;
     movesNumber = 0;
 
-    // Set randomly picked pairs of cards
-    randomCardsArray = randomIndexesOfPairs(numberOfPairs);
+    // Check if there are no needed number of cards on the board
+    cardsFront = document.querySelectorAll('.card__front');
+    if (cardsFront.length !== numberOfPairs * 2) {
+      // Remove all cards
+      while (board.hasChildNodes()) {
+        board.removeChild(board.lastChild);
+      }
+
+      // Add new set of cards
+      pushCardsInDom(numberOfPairs);
+      cardsFront = document.querySelectorAll('.card__front');
+    }
 
     // Set number of moves to 0
     printMoves(movesNumber);
@@ -200,5 +248,5 @@ const numberOfTurns = document.querySelector('.main__turns');
   });
 
   // Starting a new game
-  newGame();
+  // newGame();
 }());
