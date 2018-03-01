@@ -48,7 +48,7 @@ html, body {
 }
 
 body {
-  background: #e2e1e0;
+  background: #5db45d;
   font-family: "Fira Sans", sans-serif;
 }
 
@@ -161,14 +161,14 @@ img {
 .card__front {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  -webkit-box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
-  box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
+  -webkit-box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
+  box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
 }
 
 .card__back {
   border-radius: 10px;
-  -webkit-box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
-  box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
+  -webkit-box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
+  box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
 }
 
 .card__flipped {
