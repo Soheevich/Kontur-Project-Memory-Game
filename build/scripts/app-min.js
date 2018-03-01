@@ -1,14 +1,13 @@
 /* eslint-env browser */
 
-const cards = document.querySelectorAll('.main__card');
-const buttonNewGame = document.querySelector('.main__new-game');
-const numberOfTurns = document.querySelector('.main__turns');
-const board = document.querySelector('.main__board');
-let cardsFront;
-
-
 // IIFE for a local scope for a game
 (function autorun() {
+  const buttonNewGame = document.querySelector('.main__new-game');
+  const numberOfTurns = document.querySelector('.main__turns');
+  const board = document.querySelector('.main__board');
+  let cardsFront;
+  let cards;
+
   // ============
   // Total number of shown pairs of cards can be easily changed
   // Remember to change main.scss => .main__board => grid size
@@ -207,19 +206,16 @@ let cardsFront;
     activeCard = null;
     movesNumber = 0;
 
-    // Check if there are no needed number of cards on the board
     cardsFront = document.querySelectorAll('.card__icon');
-    if (cardsFront.length !== numberOfPairs * 2) {
-      // Remove all cards
-      while (board.hasChildNodes()) {
-        board.removeChild(board.lastChild);
-      }
-
-      // Add new set of cards
-      pushCardsInDom(numberOfPairs);
-      // Fill the NodeList of .card__front elements
-      cardsFront = document.querySelectorAll('.card__icon');
+    // Remove all cards
+    while (board.hasChildNodes()) {
+      board.removeChild(board.lastChild);
     }
+
+    // Add new set of cards
+    pushCardsInDom(numberOfPairs);
+    // Fill the NodeList of .card__front elements
+    cardsFront = document.querySelectorAll('.card__icon');
 
     // Add card images. It iterates through every index of pairs array,
     // then take a random card index from the randomCardsIndexes and add src to the every card.
@@ -235,6 +231,14 @@ let cardsFront;
 
     // Set number of moves to 0
     printMoves(movesNumber);
+
+    // Cards variable can be assigned only after adding cards to DOM
+    cards = document.querySelectorAll('.main__card');
+    console.log(cards);
+    // Clicking on cards
+    cards.forEach((card) => {
+      card.addEventListener('click', clicked);
+    });
 
     // Remove all temporary classes and showing cards for 3 seconds
     canClick = false;
@@ -259,11 +263,6 @@ let cardsFront;
   // Clicking on New Game button
   buttonNewGame.addEventListener('click', newGame);
 
-  // Clicking on cards
-  cards.forEach((card) => {
-    card.addEventListener('click', clicked);
-  });
-
-  // Starting a new game
+  // // Starting a new game
   // newGame();
 }());
