@@ -1,5 +1,9 @@
 /* eslint-env browser */
 
+// TODO
+// открытую карту нельзя закрыть
+// открытая пара исчезает
+
 // IIFE for a local scope for a game
 (function autorun() {
   const buttonNewGame = document.querySelector('.main__new-game');
@@ -18,7 +22,7 @@
   let canClick = true; // to prevent clicking on another cards while animation
 
 
-  // Function to print total amount of points
+  // Function to count total amount of points
   const pointsCounter = {
     points: 0,
     openedPairs: 0,
@@ -34,7 +38,7 @@
         this.openedPairs += 1;
         this.points += (numberOfPairs - this.openedPairs) * 42;
       } else if (direction === 'minus') {
-        this.points -= (numberOfPairs - this.openedPairs) * 42;
+        this.points -= this.openedPairs * 42;
       }
     },
   };
