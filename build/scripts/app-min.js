@@ -86,19 +86,19 @@ let cardsFront;
     for (let i = 0; i < totalCards; i += 1) {
       const mainCardWrapper = document.createElement('div');
       const mainCard = document.createElement('div');
-      const cardBack = document.createElement('div');
+      const cardFront = document.createElement('div');
       const cardIcon = document.createElement('img');
-      const s = document.createElement('div');
+      const cardBack = document.createElement('div');
 
       mainCardWrapper.classList.add('main__card-wrapper');
       mainCard.classList.add('main__card');
-      cardBack.classList.add('card__back');
+      cardFront.classList.add('card__front');
       cardIcon.classList.add('card__icon');
-      s.classList.add('card__front');
+      cardBack.classList.add('card__back');
 
-      cardBack.appendChild(cardIcon);
+      cardFront.appendChild(cardIcon);
+      mainCard.appendChild(cardFront);
       mainCard.appendChild(cardBack);
-      mainCard.appendChild(s);
       mainCardWrapper.appendChild(mainCard);
       documentFragment.appendChild(mainCardWrapper);
     }
