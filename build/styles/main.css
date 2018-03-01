@@ -61,6 +61,10 @@ body {
   grid-template-areas: "h h h" "n n n" ". m ." "f f f";
 }
 
+img {
+  max-width: 100%;
+}
+
 .header {
   grid-area: h;
   text-align: center;
@@ -123,7 +127,9 @@ body {
   display: -ms-flexbox;
   display: flex;
   width: 130px;
-  height: 130px;
+  height: -webkit-min-content;
+  height: -moz-min-content;
+  height: min-content;
   -webkit-perspective: 1200px;
   perspective: 1200px;
   -webkit-box-pack: center;

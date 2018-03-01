@@ -48,6 +48,10 @@ body {
     "f f f";
 }
 
+img {
+  max-width: 100%;
+}
+
 // *****************
 // HEADER
 // *****************
@@ -111,7 +115,7 @@ body {
   box-sizing: border-box;
   display: flex;
   width: 130px;
-  height: 130px;
+  height: min-content;
   perspective: 1200px;
   justify-content: center;
   align-items: center;

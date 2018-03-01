@@ -41,7 +41,7 @@ let cardsFront;
 
     // Looping until needed number of random indexes is obtained
     while (outputArray.length < cardsNum) {
-      const tempRandomNumber = Math.floor(Math.random() * (cardsNum + 1));
+      const tempRandomNumber = Math.floor(Math.random() * (cardsNum));
       if (!outputArray.includes(tempRandomNumber)) outputArray.push(tempRandomNumber);
     }
     return outputArray;
@@ -204,7 +204,7 @@ let cardsFront;
     movesNumber = 0;
 
     // Check if there are no needed number of cards on the board
-    cardsFront = document.querySelectorAll('.card__front');
+    cardsFront = document.querySelectorAll('.card__icon');
     if (cardsFront.length !== numberOfPairs * 2) {
       // Remove all cards
       while (board.hasChildNodes()) {
@@ -213,8 +213,24 @@ let cardsFront;
 
       // Add new set of cards
       pushCardsInDom(numberOfPairs);
-      cardsFront = document.querySelectorAll('.card__front');
+      // Fill the NodeList of .card__front elements
+      cardsFront = document.querySelectorAll('.card__icon');
     }
+
+    // Add card images. It iterates through every index of pairs array,
+    // then take a random card index from the randomCardsIndexes and add src to the every card.
+    randomPairsArray.forEach((randomPair, index) => {
+      if (index % 2 === 0) {
+        console.log(cardsFront);
+        console.log('randomPairsArray is' + randomPairsArray);
+        console.log(randomPair);
+        const randomCardIndex = randomCardsIndexesArray[index];
+        cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
+      } else {
+        const randomCardIndex = randomCardsIndexesArray[index - 1];
+        cardsFront[randomPair].src = `images/${cardDeck[randomCardIndex]}`;
+      }
+    });
 
     // Set number of moves to 0
     printMoves(movesNumber);
