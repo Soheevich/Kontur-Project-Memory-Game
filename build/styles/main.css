@@ -56,10 +56,10 @@ body {
   max-width: 100%;
   max-height: 100%;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
   display: grid;
-  grid-template: repeat(4, auto)/auto minmax(-webkit-min-content, 75vw) auto;
-  grid-template: repeat(4, auto)/auto minmax(min-content, 75vw) auto;
+  grid-template: repeat(2, -webkit-min-content) 1fr min-content/auto minmax(-webkit-min-content, 75vw) auto;
+  grid-template: repeat(2, min-content) 1fr min-content/auto minmax(min-content, 75vw) auto;
   grid-template-areas: "h h h" "n n n" ". m ." "f f f";
 }
 
@@ -122,20 +122,18 @@ img {
 }
 
 .main__card-wrapper {
-  position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
   width: 130px;
+  height: 188px;
   margin: 0 auto;
   -webkit-perspective: 1200px;
   perspective: 1200px;
 }
 
 .main__card {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  position: relative;
   display: block;
   width: 100%;
   -webkit-transform-style: preserve-3d;
@@ -159,17 +157,16 @@ img {
 
 .card__front {
   background: #ff0080;
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
   -webkit-box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
   box-shadow: 0 3px 6px rgba(255, 0, 128, 0.3), 0 3px 12px rgba(255, 0, 128, 0.25), 0 3px 20px rgba(255, 0, 128, 0.2);
 }
 
 .card__back {
   background: #7700ff;
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
   -webkit-box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
   box-shadow: 0 3px 6px rgba(119, 0, 255, 0.3), 0 3px 12px rgba(119, 0, 255, 0.25), 0 3px 20px rgba(119, 0, 255, 0.2);
-  border-bottom: 1px solid #ad66ff;
 }
 
 .card__flipped {

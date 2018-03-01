@@ -97,7 +97,7 @@ let cardsFront;
       cardFrontIcon.classList.add('card__icon');
       cardBack.classList.add('card__back');
       cardBackIcon.classList.add('card__icon-back');
-      cardBackIcon.src = 'images/card_back.svg';
+      cardBackIcon.src = 'images/card_back.png';
 
       cardFront.appendChild(cardFrontIcon);
       mainCard.appendChild(cardFront);
