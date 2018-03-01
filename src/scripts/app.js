@@ -93,7 +93,6 @@
       mainCardWrapper.classList.add('main__card-wrapper');
       mainCard.classList.add('main__card');
       cardBack.classList.add('card__back');
-      cardBackIcon.classList.add('card__icon-back');
       cardBackIcon.src = 'images/card_back.png';
       cardFront.classList.add('card__front');
       cardFrontIcon.classList.add('card__icon');
@@ -134,8 +133,8 @@
 
         // Got a pair, it'll mark them and mute event listeners
       } else if (
-        e.target.querySelector('.card__icon').className ===
-          activeCard.querySelector('.card__icon').className
+        e.target.querySelector('.card__icon').src ===
+          activeCard.querySelector('.card__icon').src
       ) {
         e.target.classList.add('card__flipped');
         canClick = false;
@@ -234,7 +233,6 @@
 
     // Cards variable can be assigned only after adding cards to DOM
     cards = document.querySelectorAll('.main__card');
-    console.log(cards);
     // Clicking on cards
     cards.forEach((card) => {
       card.addEventListener('click', clicked);
