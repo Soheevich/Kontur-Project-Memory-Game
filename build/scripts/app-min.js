@@ -23,26 +23,27 @@
 
 
   // Function to count total amount of points
-  const pointsCounter = {
-    points: 0,
-    openedPairs: 0,
-    get finalPoints() {
-      return this.points;
-    },
-    reset() {
-      this.points = 0;
-      this.openedPairs = 0;
-    },
-    counting(direction) {
-      if (direction === 'plus') {
-        this.openedPairs += 1;
-        this.points += (numberOfPairs - this.openedPairs) * 42;
-      } else if (direction === 'minus') {
-        this.points -= this.openedPairs * 42;
-      }
-    },
-  };
-
+  const pointsCounter = (function iife() {
+    let points = 0;
+    let openedPairs = 0;
+    return {
+      get finalPoints() {
+        return points;
+      },
+      reset() {
+        points = 0;
+        openedPairs = 0;
+      },
+      counting(direction) {
+        if (direction === 'plus') {
+          openedPairs += 1;
+          points += (numberOfPairs - openedPairs) * 42;
+        } else if (direction === 'minus') {
+          points -= openedPairs * 42;
+        }
+      },
+    };
+  }());
 
   // Function to print total points
   const printPoints = (number) => {
