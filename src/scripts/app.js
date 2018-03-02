@@ -1,9 +1,5 @@
 /* eslint-env browser */
 
-// TODO
-// открытую карту нельзя закрыть
-// открытая пара исчезает
-
 // IIFE for a local scope for a game
 (function autorun() {
   const buttonNewGame = document.querySelector('.main__new-game');
@@ -161,16 +157,15 @@
         pointsCounter.counting('plus');
         printPoints(pointsCounter.finalPoints);
 
+        // Fade out this pair
         setTimeout(() => {
-          e.target.classList.add('shake');
-          activeCard.classList.add('shake');
+          e.target.parentNode.classList.add('fade-out');
+          activeCard.parentNode.classList.add('fade-out');
           activeCard = null;
           setTimeout(() => {
             canClick = true;
           }, 300);
         }, 700);
-        e.target.classList.add('card__no-events'); // This class will mute any eventListener
-        activeCard.classList.add('card__no-events');
 
         // Wrong pair, remove selection from the both cards
       } else {
