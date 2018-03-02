@@ -22,7 +22,7 @@
   let canClick = true; // to prevent clicking on another cards while animation
 
 
-  // Function to count total amount of points
+  // Module to count total amount of points
   const pointsCounter = (function iife() {
     let points = 0;
     let openedPairs = 0;
@@ -149,17 +149,9 @@
 
       // Clicking on the same card will remove its selection and flip it
       if (e.target === activeCard) {
-        activeCard.classList.remove('card__flipped');
-        canClick = false;
-        activeCard = null;
-        pointsCounter.counting('minus');
-        printPoints(pointsCounter.finalPoints);
+        e.target.classList.add('card__no-events'); // This class will mute any eventListener
 
-        setTimeout(() => {
-          canClick = true;
-        }, 300);
-
-        // Got a pair, it'll mark both cards and mute event listeners
+      // Got a pair, it'll mark both cards and mute event listeners
       } else if (
         e.target.querySelector('.card__icon').src ===
           activeCard.querySelector('.card__icon').src
@@ -199,7 +191,7 @@
             activeCard.classList.remove('shake');
             e.target.classList.remove('shake');
             setTimeout(() => {
-              activeCard.classList.remove('card__flipped');
+              activeCard.classList.remove('card__flipped', 'card__no-events');
               e.target.classList.remove('card__flipped');
               activeCard = null;
               setTimeout(() => {
@@ -242,7 +234,7 @@
 
     // Add new set of cards
     pushCardsInDom(numberOfPairs);
-    // Fill the NodeList of .card__front elements
+    // Fill the NodeList of .card__icon elements
     cardsFront = document.querySelectorAll('.card__icon');
 
     // Add card images. It iterates through every index of pairs array,
@@ -270,7 +262,4 @@
 
   // Clicking on New Game button
   buttonNewGame.addEventListener('click', newGame);
-
-  // // Starting a new game
-  // newGame();
 }());
