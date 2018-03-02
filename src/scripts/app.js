@@ -251,11 +251,9 @@
       card.addEventListener('click', clicked);
     });
 
-    // Remove all temporary classes and showing cards for 3 seconds
+    // Showing cards for 5 seconds
     canClick = false;
     cards.forEach((card) => {
-      card.classList.remove('shake', 'card__flipped', 'card__no-events');
-
       // Timeout is needed to do properly opening animation to previously opened cards
       setTimeout(() => {
         card.classList.add('card__flipped');
@@ -265,8 +263,8 @@
           card.classList.remove('card__flipped');
           setTimeout(() => {
             canClick = true;
-          }, 300);
-        }, 2000); // number of milliseconds to show the cards at the start of the game
+          }, 700);
+        }, 5000); // number of milliseconds to show the cards at the start of the game
       }, 0);
     });
 
