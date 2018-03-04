@@ -81,24 +81,24 @@
   const cardDeck = (function filenames() {
     const extension = '.svg';
     const array = [];
-    const suites = ['clubs', 'diamonds', 'hearts', 'spades'];
+    const suites = ['c', 'd', 'h', 's'];
     for (let i = 1; i < 14; i += 1) {
       suites.forEach((suite) => {
         switch (i) {
           case 1:
-            array.push(`ace_of_${suite}${extension}`);
+            array.push(`1${suite}${extension}`);
             break;
           case 11:
-            array.push(`jack_of_${suite}${extension}`);
+            array.push(`j${suite}${extension}`);
             break;
           case 12:
-            array.push(`queen_of_${suite}${extension}`);
+            array.push(`q${suite}${extension}`);
             break;
           case 13:
-            array.push(`king_of_${suite}${extension}`);
+            array.push(`k${suite}${extension}`);
             break;
           default:
-            array.push(`${i}_of_${suite}${extension}`);
+            array.push(`${i}${suite}${extension}`);
             break;
         }
       });
@@ -122,7 +122,7 @@
       mainCardWrapper.classList.add('main__card-wrapper');
       mainCard.classList.add('main__card');
       cardBack.classList.add('card__back');
-      cardBackIcon.src = 'images/card_back.png';
+      cardBackIcon.src = 'images/card_back.svg';
       cardFront.classList.add('card__front');
       cardFrontIcon.classList.add('card__icon');
 

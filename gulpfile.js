@@ -6,11 +6,18 @@ const pump = require('pump');
 // const uglify = require('gulp-uglify');
 // const babel = require('gulp-babel');
 const svgmin = require('gulp-svgmin');
+const svgo = require('gulp-svgo');
 
 gulp.task('svgmin', () =>
   gulp
     .src('src/images/*.svg')
     .pipe(svgmin())
+    .pipe(gulp.dest('build/images')));
+
+gulp.task('images', () =>
+  gulp
+    .src('src/images/*.svg')
+    .pipe(svgo())
     .pipe(gulp.dest('build/images')));
 
 gulp.task('compress', (cb) => {
