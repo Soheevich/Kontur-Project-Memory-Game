@@ -32,8 +32,9 @@ html, body {
 }
 
 body {
-  background: $body-bg;
+  background: $main-color;
   font-family: $font-main;
+  color: $text-color;
 }
 
 .grid {

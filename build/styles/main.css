@@ -48,8 +48,9 @@ html, body {
 }
 
 body {
-  background: #5db45d;
-  font-family: "Fira Sans", sans-serif;
+  background: #1c7430;
+  font-family: "Open Sans", sans-serif;
+  color: #fff;
 }
 
 .grid {
