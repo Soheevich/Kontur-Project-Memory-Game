@@ -22,7 +22,7 @@ gulp.task('images', () =>
 
 gulp.task('compress', (cb) => {
   pump(
-    [gulp.src('src/scripts/*.js'),
+    [gulp.src('src/scripts/index.js'),
       // babel({ presets: ['env'] }),
       // uglify({ output: { quote_style: 1 } }),
       rename({ suffix: '-min' }),
