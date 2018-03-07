@@ -3,20 +3,27 @@
 (function autorun() {
   'use strict';
 
-  // Make an array of cards' filenames.
-  // This's an unnecessary step. All these names could be added manually.
-  const createCardFilenames = () => {
-    const extension = '.svg';
-  };
-
+  /* =================
+  MODEL
+  ================== */
   const model = (function modelAutorun() {
+    const deck = [];
+    let cardNames;
+
     return {
-      createCard(id, title, scrset) {
-        return {
-          id,
-          title,
-          scrset,
-        };
+      init() {
+        cardNames = this.createCardNamesArray();
+        cardNames.forEach((cardName) => {
+          const title = cardName.split('-').join(' of ');
+          const srcset = this.createCardFilenames(cardName);
+          const temporaryCard = this.createCard(cardName, title, srcset);
+
+          deck.push(temporaryCard);
+        });
+      },
+
+      createCard(id, title, srcset) {
+        return { id, title, srcset };
       },
 
       createCardNamesArray() {
@@ -48,9 +55,17 @@
           return array;
         }());
       },
+
+      createCardFilenames(inputName) {
+        const outputFilename = `build/images/${inputName}.svg`;
+        return outputFilename;
+      },
     };
   }());
 
+  /* =================
+  VIEW
+  ================== */
   const view = (function viewAutorun() {
     return {
       createElement(tag, attrs, ...children) {
@@ -69,6 +84,9 @@
     };
   }());
 
+  /* =================
+  CONTROLLER
+  ================== */
   const controller = (function controllerAutorun() {
     // ============
     // Total number of shown pairs of cards can be easily changed
@@ -76,6 +94,8 @@
     // ============
     const numberOfPairs = 9;
 
-    return {};
+    return {
+      createDeck
+    };
   }());
 }());
