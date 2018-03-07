@@ -73,7 +73,7 @@
       },
 
       makeRandomNumber(max) {
-        return Math.floor(Math.random * (max + 1));
+        return Math.floor(Math.random() * (max + 1));
       },
 
       makeRandomIndexes(number) {
@@ -98,6 +98,8 @@
           outputArray[i] = outputArray[j];
           outputArray[j] = temp;
         }
+
+        return outputArray;
       },
     };
   }());
