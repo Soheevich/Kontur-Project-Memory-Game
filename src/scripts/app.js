@@ -22,6 +22,10 @@
         });
       },
 
+      getDeck() {
+        return deck;
+      },
+
       createCard(id, title, srcset) {
         return { id, title, srcset };
       },
