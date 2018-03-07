@@ -10,6 +10,7 @@
     const deck = [];
     let cardNames;
     let randomIndexes;
+    let randomPairs;
 
     return {
       init() {
@@ -24,7 +25,8 @@
       },
 
       reset() {
-
+        randomIndexes = null;
+        randomPairs = null;
       },
 
       getDeck() {
@@ -73,7 +75,15 @@
       makeRandomIndexes(number) {
         const outputArray = [];
 
+        for (let i = 0; i < number; i += 1) {
+          outputArray.push(this.makeRandomNumber(53));
+        }
 
+        return outputArray;
+      },
+
+      makeRandomNumber(max) {
+        return Math.floor(Math.random * (max + 1));
       },
     };
   }());
