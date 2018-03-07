@@ -49,9 +49,33 @@
     return array;
   };
 
-  const model = {};
+  const model = (function modelAutorun() {
+    return {
+      createCard(id, title, scrset) {
+        return {
+          id,
+          title,
+          scrset,
+        };
+      },
+    };
+  }());
 
-  const view = {};
+  const view = (function viewAutorun() {
+    return {
 
-  const controller = {};
+    };
+  }());
+
+  const controller = (function controllerAutorun() {
+    // ============
+    // Total number of shown pairs of cards can be easily changed
+    // Remember to change main.scss => .main__board => grid size
+    // ============
+    const numberOfPairs = 9;
+
+    return {
+
+    };
+  }());
 }());
