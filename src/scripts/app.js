@@ -9,8 +9,7 @@
   const model = (function modelAutorun() {
     const deck = [];
     let cardNames;
-    let randomIndexes = [];
-    let randomPairs = [];
+    let randomPairs;
 
     return {
       init() {
@@ -25,12 +24,15 @@
       },
 
       reset() {
-        randomIndexes = [];
-        randomPairs = [];
+        randomPairs = null;
       },
 
       getDeck() {
         return deck;
+      },
+
+      getRandomPairs() {
+        return randomPairs;
       },
 
       createCard(id, title, srcset) {
@@ -76,20 +78,16 @@
         return Math.floor(Math.random() * (max + 1));
       },
 
-      makeRandomIndexes(number) {
-        for (let i = 0; i < number; i += 1) {
-          randomIndexes.push(this.makeRandomNumber(53));
-        }
-      },
-
       makeRandomPairs(number) {
         const totalPairs = number * 2;
         const outputArray = [];
-        let index = 0;
 
         while (outputArray.length < totalPairs) {
-          outputArray.push(index, index);
-          index += 1;
+          const tempRandomCardIndex = this.makeRandomNumber(53);
+
+          if (!outputArray.includes(tempRandomCardIndex)) {
+            outputArray.push(tempRandomCardIndex, tempRandomCardIndex);
+          }
         }
 
         for (let i = outputArray.length - 1; i > 0; i -= 1) {
@@ -142,7 +140,7 @@
       },
 
       newGame() {
-        model.makeRandomIndexes(numberOfPairs);
+        model.makeRandomPairs(numberOfPairs);
       },
     };
   }());
