@@ -83,9 +83,20 @@
       },
 
       makeRandomPairs(number) {
-        for (let j = 0; j < number; j += 1) {
+        const totalPairs = number * 2;
+        const outputArray = [];
+        let index = 0;
 
-          randomPairs.push();
+        while (outputArray.length < totalPairs) {
+          outputArray.push(index, index);
+          index += 1;
+        }
+
+        for (let i = outputArray.length - 1; i > 0; i -= 1) {
+          const j = this.makeRandomNumber(i);
+          const temp = outputArray[i];
+          outputArray[i] = outputArray[j];
+          outputArray[j] = temp;
         }
       },
     };
