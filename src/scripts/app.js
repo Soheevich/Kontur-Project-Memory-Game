@@ -9,6 +9,7 @@
   const model = (function modelAutorun() {
     const deck = [];
     let cardNames;
+    let randomIndexes;
 
     return {
       init() {
@@ -20,6 +21,10 @@
 
           deck.push(temporaryCard);
         });
+      },
+
+      reset() {
+
       },
 
       getDeck() {
@@ -64,6 +69,12 @@
         const outputFilename = `build/images/${inputName}.svg`;
         return outputFilename;
       },
+
+      makeRandomIndexes(number) {
+        const outputArray = [];
+
+
+      },
     };
   }());
 
@@ -99,7 +110,10 @@
     const numberOfPairs = 9;
 
     return {
-      createDeck
+      init() {
+        model.init();
+        view.init();
+      },
     };
   }());
 }());
