@@ -334,6 +334,9 @@
           canClick = true;
         }, startTime + animationTime);
         view.printScore(model.getScore());
+        setTimeout(() => {
+          canClick = true;
+        }, startTime + (animationTime * 2));
       },
 
       resetGame() {
