@@ -22,14 +22,10 @@
       },
 
       reset() {
-        randomCards = null;
+        randomCards = [];
       },
 
-      getDeck() {
-        return deck;
-      },
-
-      getRandomPairs() {
+      getRandomCards() {
         return randomCards;
       },
 
@@ -261,9 +257,9 @@
       },
 
       newGame() {
-        view.newGame();
+        model.reset();
         model.makeRandomPairs(numberOfPairs);
-        // console.log(model.getRandomPairs(numberOfPairs));
+        view.newGame(model.getRandomCards());
       },
     };
   }());
