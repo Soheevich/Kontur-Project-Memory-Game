@@ -1,5 +1,6 @@
 /* eslint-env browser */
 
+// My first attempt with MVC pattern
 (function autorun() {
   /* =================
   MODEL
@@ -122,8 +123,8 @@
   VIEW
   ================== */
   const view = (function viewAutorun() {
-    let animationTime;
     const mainBoard = document.querySelector('.main__board');
+    let animationTime;
     let scoreSpan;
 
     return {
@@ -184,7 +185,7 @@
         return element;
       },
 
-      newGame(cardsArray) {
+      newGame(cardsArray, startTime) {
         const startScreen = document.querySelector('.main__start-screen');
         const fragment = document.createDocumentFragment();
 
@@ -197,7 +198,7 @@
           const scoreTitle = this.createElement(
             'span',
             { className: 'controls__title' },
-            'Очки:',
+            'Очки: ',
           );
           const score = this.createElement('span', { className: 'controls__score' });
           const scoreWrapper = this.createElement(
@@ -215,7 +216,6 @@
 
           resetGameButton.addEventListener('click', controller.resetGame);
           fragment.appendChild(controls);
-          scoreSpan = document.querySelector('.controls__score');
         }
 
         if (startScreen) startScreen.remove();
@@ -238,6 +238,17 @@
 
         fragment.appendChild(mainCards);
         mainBoard.appendChild(fragment);
+        scoreSpan = document.querySelector('.controls__score');
+
+        // Show all cards at the start of every new game
+        document.querySelectorAll('.main__card').forEach((card) => {
+          setTimeout(() => {
+            card.classList.add('card__flipped');
+            setTimeout(() => {
+              card.classList.remove('card__flipped');
+            }, startTime);
+          }, 100);
+        });
       },
 
       addCard(dataId, alt, src) {
@@ -282,7 +293,12 @@
         return mainCardWrapper;
       },
 
-      // Method to print total score
+      // Open clicked card
+      openCard(event) {
+        event.target.classList.toggle('card__flipped');
+      },
+
+      // Print total score
       printScore(number) {
         scoreSpan.textContent = number;
       },
@@ -299,7 +315,7 @@
     // Remember to change main.scss => .main__board => grid size
     // ============
     const numberOfPairs = 9;
-    const startTime = 1000; // time to show cards at the start of the game
+    const startTime = 2000; // time to show cards at the start of the game
     const animationTime = 500;
     let activeCard = null;
     let canClick = true; // to prevent clicking on another cards while animation
@@ -313,21 +329,22 @@
       newGame() {
         canClick = false;
         model.makeRandomPairs(numberOfPairs);
-        view.newGame(model.getRandomCards());
+        view.newGame(model.getRandomCards(), startTime);
         setTimeout(() => {
           canClick = true;
         }, startTime + animationTime);
+        view.printScore(model.getScore());
       },
 
       resetGame() {
         model.reset();
         view.reset();
         model.makeRandomPairs(numberOfPairs);
-        view.newGame(model.getRandomCards());
+        view.newGame(model.getRandomCards(), startTime);
       },
 
       onCardClick(event) {
-        event.target.classList.toggle('card__flipped');
+        view.openCard(event);
       },
     };
   }());
