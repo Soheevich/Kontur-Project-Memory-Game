@@ -137,7 +137,11 @@
         const element = document.createElement(tag);
 
         Object.keys(attrs).forEach((key) => {
-          element[key] = attrs[key];
+          if (key === 'dataId') {
+            element.dataset.id = attrs[key];
+          } else {
+            element[key] = attrs[key];
+          }
         });
 
         children.forEach((child) => {
@@ -213,7 +217,8 @@
         const cardFrontIcon = this.createElement(
           'img',
           {
-            'data-id': dataId,
+            className: 'card__icon',
+            dataId,
             src,
             alt,
           },
