@@ -298,6 +298,12 @@
         event.target.classList.toggle('card__flipped');
       },
 
+      // Fade out selected pair
+      fadeOutPair(cardOne, cardTwo) {
+        cardOne.parentNode.classList.add('fade-out');
+        cardTwo.parentNode.classList.add('fade-out');
+      },
+
       // Print total score
       printScore(number) {
         scoreSpan.textContent = number;
@@ -318,6 +324,7 @@
     const startTime = 2000; // time to show cards at the start of the game
     const animationTime = 500;
     let activeCard = null;
+    let activeCardId = null;
     let canClick = true; // to prevent clicking on another cards while animation
 
     return {
@@ -330,10 +337,12 @@
         canClick = false;
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards(), startTime);
+        view.printScore(model.getScore());
+
         setTimeout(() => {
           canClick = true;
         }, startTime + animationTime);
-        view.printScore(model.getScore());
+
         setTimeout(() => {
           canClick = true;
         }, startTime + (animationTime * 2));
@@ -344,10 +353,47 @@
         view.reset();
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards(), startTime);
+
+        activeCard = null;
+        activeCardId = null;
+        canClick = true;
       },
 
       onCardClick(event) {
-        view.openCard(event);
+        const clickedCard = event.target;
+        const clickedCardId = clickedCard.querySelector('.card__icon').dataset.id;
+
+        if (activeCard && canClick) {
+          // Found a pair
+          if (activeCardId === clickedCardId) {
+            view.openCard(event);
+            canClick = false;
+            model.countingScore('plus');
+
+            setTimeout(() => {
+              view.fadeOutPair(activeCard, clickedCard);
+              activeCard = null;
+
+              setTimeout(() => {
+                canClick = true;
+              }, animationTime - 200);
+            }, animationTime);
+          }
+
+        // Mark a card as selected one
+        } else if (canClick) {
+          activeCard = clickedCard;
+          activeCardId = activeCard.querySelector('.card__icon').dataset.id;
+          console.log(activeCard);
+          canClick = false;
+          view.openCard(event);
+
+          setTimeout(() => {
+            canClick = true;
+          }, animationTime - 200);
+        }
+
+        view.printScore(model.getScore());
       },
     };
   }());
