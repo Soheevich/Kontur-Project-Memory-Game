@@ -112,6 +112,10 @@ img {
   margin-bottom: 1em;
 }
 
+.controls__new-game {
+  cursor: pointer;
+}
+
 .main__cards {
   width: 100%;
   display: -webkit-box;

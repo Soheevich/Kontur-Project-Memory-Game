@@ -157,37 +157,44 @@
 
       newGame(cardsArray) {
         const startScreen = document.querySelector('.main__start-screen');
-        startScreen.remove();
-
+        let mainCards = document.querySelector('.main__cards');
         const fragment = document.createDocumentFragment();
 
-        const newGame = this.createElement(
-          'span',
-          { className: 'controls__new-game' },
-          'Начать заново',
-        );
-        const pointsTitle = this.createElement(
-          'span',
-          { className: 'controls__title' },
-          'Очки:',
-        );
-        const points = this.createElement(
-          'span',
-          { className: 'controls__points' },
-        );
-        const pointsWrapper = this.createElement(
-          'div',
-          { className: 'controls__wrapper' },
-          pointsTitle,
-          points,
-        );
-        const controls = this.createElement(
-          'section',
-          { className: 'main__controls' },
-          newGame,
-          pointsWrapper,
-        );
-        fragment.appendChild(controls);
+        if (startScreen) {
+          startScreen.remove();
+
+          const newGame = this.createElement(
+            'span',
+            { className: 'controls__new-game' },
+            'Начать заново',
+          );
+          const pointsTitle = this.createElement(
+            'span',
+            { className: 'controls__title' },
+            'Очки:',
+          );
+          const points = this.createElement(
+            'span',
+            { className: 'controls__points' },
+          );
+          const pointsWrapper = this.createElement(
+            'div',
+            { className: 'controls__wrapper' },
+            pointsTitle,
+            points,
+          );
+          const controls = this.createElement(
+            'section',
+            { className: 'main__controls' },
+            newGame,
+            pointsWrapper,
+          );
+
+          newGame.addEventListener('click', controller.newGame);
+          fragment.appendChild(controls);
+        } else {
+          mainCards.remove();
+        }
 
         const mainCardsGrid = this.createElement(
           'div',
@@ -199,11 +206,12 @@
           mainCardsGrid.appendChild(tempCard);
           tempCard.addEventListener('click', controller.onClick);
         });
-        const mainCards = this.createElement(
+        mainCards = this.createElement(
           'section',
           { className: 'main__cards' },
           mainCardsGrid,
         );
+
         fragment.appendChild(mainCards);
         mainBoard.appendChild(fragment);
       },
