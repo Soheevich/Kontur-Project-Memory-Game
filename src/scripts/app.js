@@ -300,6 +300,10 @@
         event.target.classList.add('card__flipped');
       },
 
+      noEventsOnCard(card) {
+        card.classList.add('card__no-events');
+      },
+
       // Fade out selected pair
       fadeOutPair(cardOne, cardTwo) {
         cardOne.parentNode.classList.add('fade-out');
@@ -406,7 +410,7 @@
         } else if (canClick) {
           view.openCard(event);
           activeCard = clickedCard;
-          activeCard.classList.add('card__no-events');
+          view.noEventsOnCard(activeCard);
           activeCardId = activeCard.querySelector('.card__icon').dataset.id;
           canClick = false;
 
