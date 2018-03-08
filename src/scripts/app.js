@@ -9,7 +9,7 @@
   const model = (function modelAutorun() {
     const deck = [];
     let cardNames;
-    let randomPairs;
+    let randomCards = [];
 
     return {
       init() {
@@ -24,7 +24,7 @@
       },
 
       reset() {
-        randomPairs = null;
+        randomCards = null;
       },
 
       getDeck() {
@@ -32,7 +32,7 @@
       },
 
       getRandomPairs() {
-        return randomPairs;
+        return randomCards;
       },
 
       createCard(id, title, srcset) {
@@ -80,24 +80,26 @@
 
       makeRandomPairs(number) {
         const totalPairs = number * 2;
-        const outputArray = [];
+        const tempArray = [];
 
-        while (outputArray.length < totalPairs) {
+        while (tempArray.length < totalPairs) {
           const tempRandomCardIndex = this.makeRandomNumber(53);
 
-          if (!outputArray.includes(tempRandomCardIndex)) {
-            outputArray.push(tempRandomCardIndex, tempRandomCardIndex);
+          if (!tempArray.includes(tempRandomCardIndex)) {
+            tempArray.push(tempRandomCardIndex, tempRandomCardIndex);
           }
         }
 
-        for (let i = outputArray.length - 1; i > 0; i -= 1) {
+        for (let i = tempArray.length - 1; i > 0; i -= 1) {
           const j = this.makeRandomNumber(i);
-          const temp = outputArray[i];
-          outputArray[i] = outputArray[j];
-          outputArray[j] = temp;
+          const temp = tempArray[i];
+          tempArray[i] = tempArray[j];
+          tempArray[j] = temp;
         }
 
-        return outputArray;
+        tempArray.forEach((cardIndex) => {
+          randomCards.push(deck[cardIndex]);
+        });
       },
     };
   }());
@@ -107,6 +109,10 @@
   ================== */
   const view = (function viewAutorun() {
     return {
+      init() {
+
+      },
+
       createElement(tag, attrs, ...children) {
         const element = document.createElement(tag);
 
@@ -128,7 +134,7 @@
   ================== */
   const controller = (function controllerAutorun() {
     // ============
-    // Total number of shown pairs of cards can be easily changed
+    // Total number of shown pairs of cards can be changed
     // Remember to change main.scss => .main__board => grid size
     // ============
     const numberOfPairs = 9;
@@ -141,7 +147,10 @@
 
       newGame() {
         model.makeRandomPairs(numberOfPairs);
+        // console.log(model.getRandomPairs(numberOfPairs));
       },
     };
   }());
+  // controller.init();
+  // controller.newGame();
 }());
