@@ -148,8 +148,8 @@ img {
   height: 142px;
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  -webkit-transition: all 0.7s ease-in-out;
-  transition: all 0.7s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   -webkit-box-shadow: 0 3px 6px rgba(8, 34, 14, 0.3), 0 3px 12px rgba(8, 34, 14, 0.25), 0 3px 20px rgba(8, 34, 14, 0.2);
   box-shadow: 0 3px 6px rgba(8, 34, 14, 0.3), 0 3px 12px rgba(8, 34, 14, 0.25), 0 3px 20px rgba(8, 34, 14, 0.2);
 }
