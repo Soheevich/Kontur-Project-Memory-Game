@@ -10,9 +10,11 @@
     let randomCards = [];
     let score = 0;
     let openedPairs = 0;
+    let numberOfPairs;
 
     return {
-      init() {
+      init(totalPairs) {
+        numberOfPairs = totalPairs;
         cardNames = this.createCardNamesArray();
         cardNames.forEach((cardName) => {
           const title = cardName.split('-').join(' of ');
@@ -31,6 +33,10 @@
 
       getRandomCards() {
         return randomCards;
+      },
+
+      getScore() {
+        return score;
       },
 
       createCard(dataId, alt, src) {
@@ -98,6 +104,15 @@
         tempArray.forEach((cardIndex) => {
           randomCards.push(deck[cardIndex]);
         });
+      },
+
+      countingScore(action) {
+        if (action === 'plus') {
+          openedPairs += 1;
+          score += (numberOfPairs - openedPairs) * 42;
+        } else if (action === 'minus') {
+          score -= openedPairs * 42;
+        }
       },
     };
   }());
@@ -280,7 +295,7 @@
 
     return {
       init() {
-        model.init();
+        model.init(numberOfPairs);
         view.init();
       },
 
