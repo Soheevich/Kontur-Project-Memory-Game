@@ -14,8 +14,8 @@
         cardNames = this.createCardNamesArray();
         cardNames.forEach((cardName) => {
           const title = cardName.split('-').join(' of ');
-          const srcset = this.createCardFilenames(cardName);
-          const temporaryCard = this.createCard(cardName, title, srcset);
+          const src = this.createCardFilenames(cardName);
+          const temporaryCard = this.createCard(cardName, title, src);
 
           deck.push(temporaryCard);
         });
@@ -29,8 +29,8 @@
         return randomCards;
       },
 
-      createCard(dataId, alt, srcset) {
-        return { dataId, alt, srcset };
+      createCard(dataId, alt, src) {
+        return { dataId, alt, src };
       },
 
       createCardNamesArray() {
@@ -64,7 +64,7 @@
       },
 
       createCardFilenames(inputName) {
-        const outputFilename = `build/images/${inputName}.svg`;
+        const outputFilename = `images/${inputName}.svg`;
         return outputFilename;
       },
 
@@ -190,14 +190,14 @@
           { className: 'main__cards' },
         );
         cardsArray.forEach((card) => {
-          const tempCard = this.addCard(card.dataId, card.alt, card.srcset);
+          const tempCard = this.addCard(card.dataId, card.alt, card.src);
           mainCards.appendChild(tempCard);
         });
         fragment.appendChild(mainCards);
         mainBoard.appendChild(fragment);
       },
 
-      addCard(dataId, alt, srcset) {
+      addCard(dataId, alt, src) {
         const cardBackIcon = this.createElement(
           'img',
           {
@@ -214,13 +214,13 @@
           'img',
           {
             'data-id': dataId,
-            srcset,
+            src,
             alt,
           },
         );
         const cardFront = this.createElement(
           'div',
-          { className: 'card__back' },
+          { className: 'card__front' },
           cardFrontIcon,
         );
         const mainCard = this.createElement(
