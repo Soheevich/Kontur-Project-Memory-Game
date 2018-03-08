@@ -122,11 +122,13 @@
   VIEW
   ================== */
   const view = (function viewAutorun() {
+    let animationTime;
     const mainBoard = document.querySelector('.main__board');
     let scoreSpan;
 
     return {
-      init() {
+      init(time) {
+        animationTime = time;
         const img = this.createElement('img', {
           className: 'main__start-image',
           src: 'images/StartGame.png',
@@ -297,18 +299,24 @@
     // Remember to change main.scss => .main__board => grid size
     // ============
     const numberOfPairs = 9;
+    const startTime = 1000; // time to show cards at the start of the game
+    const animationTime = 500;
     let activeCard = null;
     let canClick = true; // to prevent clicking on another cards while animation
 
     return {
       init() {
         model.init(numberOfPairs);
-        view.init();
+        view.init(animationTime);
       },
 
       newGame() {
+        canClick = false;
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards());
+        setTimeout(() => {
+          canClick = true;
+        }, startTime + animationTime);
       },
 
       resetGame() {
