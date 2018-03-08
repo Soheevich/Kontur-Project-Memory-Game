@@ -112,6 +112,9 @@ img {
   height: 142px;  // поменять высоту и ширину карт вручую!
   transform-style: preserve-3d;
   transition: all 0.7s ease-in-out;
+  box-shadow: 0 3px 6px transparentize(darken($main-color, 20%), 0.70), 
+              0 3px 12px transparentize(darken($main-color, 20%), 0.75),
+              0 3px 20px transparentize(darken($main-color, 20%), 0.80);
 }
 
 .card__front, .card__back {
@@ -130,15 +133,6 @@ img {
 
 .card__front {
   transform: rotateY( 180deg );
-  box-shadow: 0 3px 6px transparentize($card-front, 0.70), 
-              0 3px 12px transparentize($card-front, 0.75),
-              0 3px 20px transparentize($card-front, 0.80);
-}
-
-.card__back {
-  box-shadow: 0 3px 6px transparentize($card-back, 0.70), 
-              0 3px 12px transparentize($card-back, 0.75),
-              0 3px 20px transparentize($card-back, 0.80);
 }
 
 .card__flipped {

@@ -150,6 +150,8 @@ img {
   transform-style: preserve-3d;
   -webkit-transition: all 0.7s ease-in-out;
   transition: all 0.7s ease-in-out;
+  -webkit-box-shadow: 0 3px 6px rgba(8, 34, 14, 0.3), 0 3px 12px rgba(8, 34, 14, 0.25), 0 3px 20px rgba(8, 34, 14, 0.2);
+  box-shadow: 0 3px 6px rgba(8, 34, 14, 0.3), 0 3px 12px rgba(8, 34, 14, 0.25), 0 3px 20px rgba(8, 34, 14, 0.2);
 }
 
 .card__front, .card__back {
@@ -171,13 +173,6 @@ img {
 .card__front {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  -webkit-box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
-  box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
-}
-
-.card__back {
-  -webkit-box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
-  box-shadow: 0 3px 6px rgba(0, 128, 0, 0.3), 0 3px 12px rgba(0, 128, 0, 0.25), 0 3px 20px rgba(0, 128, 0, 0.2);
 }
 
 .card__flipped {
