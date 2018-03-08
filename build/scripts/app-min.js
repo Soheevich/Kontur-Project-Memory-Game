@@ -189,14 +189,19 @@
         );
         fragment.appendChild(controls);
 
-        const mainCards = this.createElement(
-          'section',
-          { className: 'main__cards' },
+        const mainCardsGrid = this.createElement(
+          'div',
+          { className: 'main__cards-grid' },
         );
         cardsArray.forEach((card) => {
           const tempCard = this.addCard(card.dataId, card.alt, card.src);
-          mainCards.appendChild(tempCard);
+          mainCardsGrid.appendChild(tempCard);
         });
+        const mainCards = this.createElement(
+          'section',
+          { className: 'main__cards' },
+          mainCardsGrid,
+        );
         fragment.appendChild(mainCards);
         mainBoard.appendChild(fragment);
       },

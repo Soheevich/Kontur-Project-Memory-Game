@@ -114,9 +114,15 @@ img {
 
 .main__cards {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+}
+
+.main__cards-grid {
   display: grid;
   grid-template: repeat(3, -webkit-min-content)/repeat(6, -webkit-min-content);
   grid-template: repeat(3, min-content)/repeat(6, min-content);
@@ -155,6 +161,7 @@ img {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   pointer-events: none;
+  line-height: 0;
 }
 
 .card__front img, .card__back img {

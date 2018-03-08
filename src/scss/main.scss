@@ -86,7 +86,11 @@ img {
 
 .main__cards {
   width: 100%;
+  display: flex;
   justify-content: center;
+}
+
+.main__cards-grid {
   display: grid;
   grid-template: repeat(3, min-content) / repeat(6, min-content);
   grid-gap: 1em;
@@ -118,6 +122,7 @@ img {
   width: 100%;
   backface-visibility: hidden;
   pointer-events: none;
+  line-height: 0;
     img {
       border-radius: 5px;
     }
