@@ -7,6 +7,14 @@ const pump = require('pump');
 // const babel = require('gulp-babel');
 const svgmin = require('gulp-svgmin');
 const svgo = require('gulp-svgo');
+const svg2png = require('gulp-svg2png');
+
+gulp.task('svg2png', () => {
+  gulp
+    .src('src/images/*.svg')
+    .pipe(svg2png())
+    .pipe(gulp.dest('src/images/'));
+});
 
 gulp.task('svgmin', () =>
   gulp
