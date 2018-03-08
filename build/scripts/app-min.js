@@ -1,8 +1,6 @@
 /* eslint-env browser */
 
 (function autorun() {
-  'use strict';
-
   /* =================
   MODEL
   ================== */
@@ -108,9 +106,35 @@
   VIEW
   ================== */
   const view = (function viewAutorun() {
+    const mainBoard = document.querySelector('.main__board');
+
     return {
       init() {
+        const img = this.createElement('img', {
+          className: 'main__start-image',
+          src: 'images/StartGame.png',
+        });
+        const title = this.createElement(
+          'h1',
+          { className: 'main__title' },
+          'memory game',
+        );
+        const button = this.createElement(
+          'button',
+          { className: 'main__new-game' },
+          'Начать игру',
+        );
+        const article = this.createElement(
+          'article',
+          { className: 'main__start-screen' },
+          img,
+          title,
+          button,
+        );
 
+        button.addEventListener('click', controller.newGame);
+
+        mainBoard.appendChild(article);
       },
 
       createElement(tag, attrs, ...children) {
@@ -121,10 +145,20 @@
         });
 
         children.forEach((child) => {
-          element.appendChild(child);
+          let tempChild = child;
+          if (typeof tempChild === 'string') {
+            tempChild = document.createTextNode(child);
+          }
+          element.appendChild(tempChild);
         });
 
         return element;
+      },
+
+      newGame() {
+        const startScreen = document.querySelector('.main__start-screen');
+
+        startScreen.remove();
       },
     };
   }());
@@ -148,9 +182,11 @@
       newGame() {
         model.makeRandomPairs(numberOfPairs);
         // console.log(model.getRandomPairs(numberOfPairs));
+
+        view.newGame();
       },
     };
   }());
-  // controller.init();
+  controller.init();
   // controller.newGame();
 }());

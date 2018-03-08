@@ -33,7 +33,7 @@ html, body {
 body {
   background: $main-color;
   font-family: $font-main;
-  color: $text-color;
+  color: $white-color;
 }
 
 img {
@@ -47,8 +47,41 @@ img {
   margin-bottom: 1em;
 }
 
+.main__start-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main__start-image {
+  margin: 94px auto auto auto;
+}
+
+.main__title {
+  margin: 20px auto 34px auto;
+  text-transform: uppercase;
+  font-size: $font-title;
+  font-weight: $font-bold;
+  letter-spacing: 0.2px;
+  line-height: 38px;
+}
+
 .main__new-game {
-    padding: 0.2em;
+    padding: 10px 20px;
+    margin: 0 auto;
+    font-family: $font-main;
+    font-size: $font-button;
+    font-weight: $font-bold;
+    background: transparentize($white-color, 0.15);
+    color: $main-color;
+    line-height: 22px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:active {
+      transform: translateY(1px);
+    }
 }
 
 .main__cards {

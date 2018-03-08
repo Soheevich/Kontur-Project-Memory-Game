@@ -11,7 +11,7 @@ const svg2png = require('gulp-svg2png');
 
 gulp.task('svg2png', () => {
   gulp
-    .src('src/images/*.svg')
+    .src('src/images/card_back.svg')
     .pipe(svg2png())
     .pipe(gulp.dest('src/images/'));
 });
