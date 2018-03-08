@@ -8,6 +8,8 @@
     const deck = [];
     let cardNames;
     let randomCards = [];
+    let score = 0;
+    let openedPairs = 0;
 
     return {
       init() {
@@ -23,6 +25,8 @@
 
       reset() {
         randomCards = [];
+        score = 0;
+        openedPairs = 0;
       },
 
       getRandomCards() {
@@ -98,6 +102,7 @@
     };
   }());
 
+
   /* =================
   VIEW
   ================== */
@@ -133,6 +138,12 @@
         mainBoard.appendChild(article);
       },
 
+      reset() {
+        const mainCards = document.querySelector('.main__cards');
+
+        mainCards.remove();
+      },
+
       createElement(tag, attrs, ...children) {
         const element = document.createElement(tag);
 
@@ -157,13 +168,10 @@
 
       newGame(cardsArray) {
         const startScreen = document.querySelector('.main__start-screen');
-        let mainCards = document.querySelector('.main__cards');
         const fragment = document.createDocumentFragment();
 
-        if (startScreen) {
-          startScreen.remove();
-
-          const newGame = this.createElement(
+        if (!document.querySelector('.main__controls')) {
+          const resetGameButton = this.createElement(
             'span',
             { className: 'controls__new-game' },
             'Начать заново',
@@ -173,10 +181,7 @@
             { className: 'controls__title' },
             'Очки:',
           );
-          const points = this.createElement(
-            'span',
-            { className: 'controls__points' },
-          );
+          const points = this.createElement('span', { className: 'controls__points' });
           const pointsWrapper = this.createElement(
             'div',
             { className: 'controls__wrapper' },
@@ -186,15 +191,15 @@
           const controls = this.createElement(
             'section',
             { className: 'main__controls' },
-            newGame,
+            resetGameButton,
             pointsWrapper,
           );
 
-          newGame.addEventListener('click', controller.newGame);
+          resetGameButton.addEventListener('click', controller.resetGame);
           fragment.appendChild(controls);
-        } else {
-          mainCards.remove();
         }
+
+        if (startScreen) startScreen.remove();
 
         const mainCardsGrid = this.createElement(
           'div',
@@ -204,9 +209,9 @@
           const tempCard = this.addCard(card.dataId, card.alt, card.src);
 
           mainCardsGrid.appendChild(tempCard);
-          tempCard.addEventListener('click', controller.onClick);
+          tempCard.addEventListener('click', controller.onCardClick);
         });
-        mainCards = this.createElement(
+        const mainCards = this.createElement(
           'section',
           { className: 'main__cards' },
           mainCardsGrid,
@@ -260,6 +265,7 @@
     };
   }());
 
+
   /* =================
   CONTROLLER
   ================== */
@@ -269,6 +275,8 @@
     // Remember to change main.scss => .main__board => grid size
     // ============
     const numberOfPairs = 9;
+    let activeCard = null;
+    let canClick = true; // to prevent clicking on another cards while animation
 
     return {
       init() {
@@ -277,12 +285,18 @@
       },
 
       newGame() {
-        model.reset();
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards());
       },
 
-      onClick(event) {
+      resetGame() {
+        model.reset();
+        view.reset();
+        model.makeRandomPairs(numberOfPairs);
+        view.newGame(model.getRandomCards());
+      },
+
+      onCardClick(event) {
         event.target.classList.toggle('card__flipped');
       },
     };
