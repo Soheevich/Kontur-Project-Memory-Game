@@ -41,12 +41,6 @@ img {
   max-height: 100%;
 }
 
-.main__controls {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1em;
-}
-
 .main__start-screen {
   display: flex;
   flex-direction: column;
@@ -82,6 +76,12 @@ img {
     &:active {
       transform: translateY(1px);
     }
+}
+
+.main__controls {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1em;
 }
 
 .main__cards {

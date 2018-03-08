@@ -155,10 +155,43 @@
         return element;
       },
 
-      newGame() {
+      newGame(cards) {
         const startScreen = document.querySelector('.main__start-screen');
-
         startScreen.remove();
+
+        const fragment = document.createDocumentFragment();
+
+        const newGame = this.createElement(
+          'span',
+          { className: 'controls__new-game' },
+          'Начать заново',
+        );
+        const pointsTitle = this.createElement(
+          'span',
+          { className: 'controls__title' },
+          'Очки:',
+        );
+        const points = this.createElement(
+          'span',
+          { className: 'controls__points' },
+        );
+        const pointsWrapper = this.createElement(
+          'div',
+          { className: 'controls__wrapper' },
+          pointsTitle,
+          points,
+        );
+        const controls = this.createElement(
+          'section',
+          { className: 'main__controls' },
+          newGame,
+          pointsWrapper,
+        );
+        fragment.appendChild(controls);
+      },
+
+      addCard(dataId, src) {
+        const
       },
     };
   }());
@@ -180,13 +213,12 @@
       },
 
       newGame() {
+        view.newGame();
         model.makeRandomPairs(numberOfPairs);
         // console.log(model.getRandomPairs(numberOfPairs));
-
-        view.newGame();
       },
     };
   }());
+
   controller.init();
-  // controller.newGame();
 }());
