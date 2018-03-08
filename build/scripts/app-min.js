@@ -69,7 +69,7 @@
       },
 
       makeRandomNumber(max) {
-        return Math.floor(Math.random() * (max + 1));
+        return Math.floor(Math.random() * (max));
       },
 
       makeRandomPairs(number) {
@@ -77,7 +77,7 @@
         const tempArray = [];
 
         while (tempArray.length < totalPairs) {
-          const tempRandomCardIndex = this.makeRandomNumber(53);
+          const tempRandomCardIndex = this.makeRandomNumber(52);
 
           if (!tempArray.includes(tempRandomCardIndex)) {
             tempArray.push(tempRandomCardIndex, tempRandomCardIndex);
@@ -85,7 +85,7 @@
         }
 
         for (let i = tempArray.length - 1; i > 0; i -= 1) {
-          const j = this.makeRandomNumber(i);
+          const j = this.makeRandomNumber(i + 1);
           const temp = tempArray[i];
           tempArray[i] = tempArray[j];
           tempArray[j] = temp;
@@ -195,7 +195,9 @@
         );
         cardsArray.forEach((card) => {
           const tempCard = this.addCard(card.dataId, card.alt, card.src);
+
           mainCardsGrid.appendChild(tempCard);
+          tempCard.addEventListener('click', controller.onClick);
         });
         const mainCards = this.createElement(
           'section',
@@ -270,6 +272,10 @@
         model.reset();
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards());
+      },
+
+      onClick(event) {
+        event.target.classList.toggle('card__flipped');
       },
     };
   }());
