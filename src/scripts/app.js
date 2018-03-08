@@ -123,6 +123,7 @@
   ================== */
   const view = (function viewAutorun() {
     const mainBoard = document.querySelector('.main__board');
+    let scoreSpan;
 
     return {
       init() {
@@ -191,27 +192,28 @@
             { className: 'controls__new-game' },
             'Начать заново',
           );
-          const pointsTitle = this.createElement(
+          const scoreTitle = this.createElement(
             'span',
             { className: 'controls__title' },
             'Очки:',
           );
-          const points = this.createElement('span', { className: 'controls__points' });
-          const pointsWrapper = this.createElement(
+          const score = this.createElement('span', { className: 'controls__score' });
+          const scoreWrapper = this.createElement(
             'div',
             { className: 'controls__wrapper' },
-            pointsTitle,
-            points,
+            scoreTitle,
+            score,
           );
           const controls = this.createElement(
             'section',
             { className: 'main__controls' },
             resetGameButton,
-            pointsWrapper,
+            scoreWrapper,
           );
 
           resetGameButton.addEventListener('click', controller.resetGame);
           fragment.appendChild(controls);
+          scoreSpan = document.querySelector('.controls__score');
         }
 
         if (startScreen) startScreen.remove();
@@ -276,6 +278,11 @@
         );
 
         return mainCardWrapper;
+      },
+
+      // Method to print total score
+      printScore(number) {
+        scoreSpan.textContent = number;
       },
     };
   }());
