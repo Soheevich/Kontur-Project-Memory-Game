@@ -228,7 +228,6 @@
           const tempCard = this.addCard(card.dataId, card.alt, card.src);
 
           mainCardsGrid.appendChild(tempCard);
-          tempCard.addEventListener('click', controller.onCardClick);
         });
         const mainCards = this.createElement(
           'section',
@@ -241,7 +240,10 @@
         scoreSpan = document.querySelector('.controls__score');
 
         // Show all cards at the start of every new game
+        // Add click event listeners to every card
         document.querySelectorAll('.main__card').forEach((card) => {
+          card.addEventListener('click', controller.onCardClick);
+
           setTimeout(() => {
             card.classList.add('card__flipped');
             setTimeout(() => {
@@ -295,13 +297,19 @@
 
       // Open clicked card
       openCard(event) {
-        event.target.classList.toggle('card__flipped');
+        event.target.classList.add('card__flipped');
       },
 
       // Fade out selected pair
       fadeOutPair(cardOne, cardTwo) {
         cardOne.parentNode.classList.add('fade-out');
         cardTwo.parentNode.classList.add('fade-out');
+      },
+
+      // Close wrong pair
+      closeBothCards(cardOne, cardTwo) {
+        cardOne.classList.remove('card__flipped', 'card__no-events');
+        cardTwo.classList.remove('card__flipped');
       },
 
       // Print total score
@@ -341,7 +349,7 @@
 
         setTimeout(() => {
           canClick = true;
-        }, startTime + animationTime);
+        }, startTime + (animationTime * 2));
 
         setTimeout(() => {
           canClick = true;
@@ -364,9 +372,9 @@
         const clickedCardId = clickedCard.querySelector('.card__icon').dataset.id;
 
         if (activeCard && canClick) {
+          view.openCard(event);
           // Found a pair
           if (activeCardId === clickedCardId) {
-            view.openCard(event);
             canClick = false;
             model.countingScore('plus');
 
@@ -378,19 +386,33 @@
                 canClick = true;
               }, animationTime - 200);
             }, animationTime);
+
+          // Wrong pair, remove selection from the both cards
+          } else {
+            canClick = false;
+            model.countingScore('minus');
+
+            setTimeout(() => {
+              view.closeBothCards(activeCard, clickedCard);
+              activeCard = null;
+
+              setTimeout(() => {
+                canClick = true;
+              }, animationTime - 200);
+            }, animationTime);
           }
 
         // Mark a card as selected one
         } else if (canClick) {
-          activeCard = clickedCard;
-          activeCardId = activeCard.querySelector('.card__icon').dataset.id;
-          console.log(activeCard);
-          canClick = false;
           view.openCard(event);
+          activeCard = clickedCard;
+          activeCard.classList.add('card__no-events');
+          activeCardId = activeCard.querySelector('.card__icon').dataset.id;
+          canClick = false;
 
           setTimeout(() => {
             canClick = true;
-          }, animationTime - 200);
+          }, animationTime - 300);
         }
 
         view.printScore(model.getScore());
