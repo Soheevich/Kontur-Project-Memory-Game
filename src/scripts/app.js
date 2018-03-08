@@ -33,8 +33,8 @@
         return randomCards;
       },
 
-      createCard(id, title, srcset) {
-        return { id, title, srcset };
+      createCard(dataId, alt, srcset) {
+        return { dataId, alt, srcset };
       },
 
       createCardNamesArray() {
@@ -155,7 +155,7 @@
         return element;
       },
 
-      newGame(cards) {
+      newGame(cardsArray) {
         const startScreen = document.querySelector('.main__start-screen');
         startScreen.remove();
 
@@ -188,10 +188,58 @@
           pointsWrapper,
         );
         fragment.appendChild(controls);
+
+        const mainCards = this.createElement(
+          'section',
+          { className: 'main__cards' },
+        );
+        cardsArray.forEach((card) => {
+          const tempCard = this.addCard(card.dataId, card.alt, card.srcset);
+          mainCards.appendChild(tempCard);
+        });
+        fragment.appendChild(mainCards);
+        mainBoard.appendChild(fragment);
       },
 
-      addCard(dataId, src) {
-        const
+      addCard(dataId, alt, srcset) {
+        const cardBackIcon = this.createElement(
+          'img',
+          {
+            src: 'images/card_back.svg',
+            alt: 'Back of the card',
+          },
+        );
+        const cardBack = this.createElement(
+          'div',
+          { className: 'card__back' },
+          cardBackIcon,
+        );
+        const cardFrontIcon = this.createElement(
+          'img',
+          {
+            'data-id': dataId,
+            srcset,
+            alt,
+          },
+        );
+        const cardFront = this.createElement(
+          'div',
+          { className: 'card__back' },
+          cardFrontIcon,
+        );
+        const mainCard = this.createElement(
+          'div',
+          { className: 'main__card' },
+          cardBack,
+          cardFront,
+        );
+        const mainCardWrapper = this.createElement(
+          'div',
+          { className: 'main__card-wrapper' },
+          mainCard,
+        );
+
+        return mainCardWrapper;
       },
     };
   }());
