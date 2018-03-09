@@ -109,8 +109,12 @@
 
       countingScore(action) {
         if (action === 'plus') {
-          openedPairs += 1;
+          openedPairs += 3;
           score += (numberOfPairs - openedPairs) * 42;
+
+          if (openedPairs === numberOfPairs) {
+            controller.win();
+          }
         } else if (action === 'minus') {
           score -= openedPairs * 42;
         }
@@ -163,6 +167,46 @@
         mainCards.remove();
       },
 
+      win(score) {
+        const mainControls = document.querySelector('.main__controls');
+        const mainCards = document.querySelector('.main__cards');
+
+        mainControls.remove();
+        mainCards.remove();
+
+        const img = this.createElement('img', {
+          className: 'main__win-image',
+          src: 'images/Group 2.png',
+        });
+        const title = this.createElement(
+          'p',
+          { className: 'main__win-title' },
+          'Поздравляем!',
+        );
+        const titleSecond = this.createElement(
+          'p',
+          { className: 'main__win-title' },
+          `Ваш итоговый счет: ${score}`,
+        );
+        const button = this.createElement(
+          'button',
+          { className: 'main__new-game' },
+          'Еще раз',
+        );
+        const article = this.createElement(
+          'article',
+          { className: 'main__win-screen' },
+          img,
+          title,
+          titleSecond,
+          button,
+        );
+
+        button.addEventListener('click', controller.newGame);
+
+        mainBoard.appendChild(article);
+      },
+
       createElement(tag, attrs, ...children) {
         const element = document.createElement(tag);
 
@@ -187,6 +231,7 @@
 
       newGame(cardsArray, startTime) {
         const startScreen = document.querySelector('.main__start-screen');
+        const winScreen = document.querySelector('.main__win-screen');
         const fragment = document.createDocumentFragment();
 
         if (!document.querySelector('.main__controls')) {
@@ -219,6 +264,7 @@
         }
 
         if (startScreen) startScreen.remove();
+        if (winScreen) winScreen.remove();
 
         const mainCardsGrid = this.createElement(
           'div',
@@ -347,17 +393,14 @@
 
       newGame() {
         canClick = false;
+        model.reset();
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards(), startTime);
         view.printScore(model.getScore());
 
         setTimeout(() => {
           canClick = true;
-        }, startTime + (animationTime * 2));
-
-        setTimeout(() => {
-          canClick = true;
-        }, startTime + (animationTime * 2));
+        }, startTime + (animationTime * 1.5));
       },
 
       resetGame() {
@@ -378,6 +421,7 @@
 
         if (activeCard && canClick) {
           view.openCard(event);
+
           // Found a pair
           if (activeCardId === clickedCardId) {
             canClick = false;
@@ -423,8 +467,10 @@
         view.printScore(model.getScore());
       },
 
-      win(score) {
-        view.win(score);
+      win() {
+        setTimeout(() => {
+          view.win(model.getScore());
+        }, (animationTime * 2.5));
       },
     };
   }());
