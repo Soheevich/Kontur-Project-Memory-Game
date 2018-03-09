@@ -190,7 +190,7 @@
         );
         const button = this.createElement(
           'button',
-          { className: 'main__new-game' },
+          { className: 'main__win-new-game' },
           'Еще раз',
         );
         const article = this.createElement(

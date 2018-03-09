@@ -1,3 +1,21 @@
+.main__new-game, .main__win-new-game {
+  margin: 0 auto;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1c7430;
+  line-height: 22px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.main__new-game:active, .main__win-new-game:active {
+  -webkit-transform: translateY(1px);
+  transform: translateY(1px);
+}
+
 @-webkit-keyframes shake {
   10%, 90% {
     -webkit-transform: rotateY(180deg) translate3d(-1px, 0, 0) rotate(-2deg);
@@ -72,7 +90,7 @@ img {
 }
 
 .main__start-image {
-  margin: 94px auto auto auto;
+  margin: 94px auto 0 auto;
 }
 
 .main__title {
@@ -82,25 +100,11 @@ img {
   font-weight: 700;
   letter-spacing: 0.2px;
   line-height: 38px;
+  opacity: 0.85;
 }
 
 .main__new-game {
   padding: 10px 20px;
-  margin: 0 auto;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.85);
-  color: #1c7430;
-  line-height: 22px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.main__new-game:active {
-  -webkit-transform: translateY(1px);
-  transform: translateY(1px);
 }
 
 .main__controls {
@@ -207,4 +211,42 @@ img {
 
 .fade-out {
   opacity: 0;
+}
+
+.main__win-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.main__win-image {
+  margin: 74px auto 0 auto;
+}
+
+.main__win-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 35px;
+  opacity: 0.85;
+}
+
+.main__win-title:first-of-type {
+  margin-top: 9px;
+}
+
+.main__win-title:last-of-type {
+  margin-bottom: 40px;
+}
+
+.main__win-new-game {
+  padding: 10px 30px;
 }
