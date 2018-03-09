@@ -135,6 +135,7 @@
   ================== */
   const view = (function viewAutorun() {
     const mainBoard = document.querySelector('.main__board');
+    const audio = document.querySelector('audio');
     let scoreSpan;
 
     return {
@@ -310,6 +311,12 @@
             }, startTime);
           }, 100);
         });
+
+        // Play audio on opening all of the cards
+        this.cardFlipAudio();
+        setTimeout(() => {
+          this.cardFlipAudio();
+        }, startTime);
       },
 
       addCard(dataId, alt, src) {
@@ -354,9 +361,16 @@
         return mainCardWrapper;
       },
 
+      // Audio
+      cardFlipAudio() {
+        audio.currentTime = 0;
+        audio.play();
+      },
+
       // Open clicked card
       openCard(event) {
         event.target.classList.add('card__flipped');
+        this.cardFlipAudio();
       },
 
       noEventsOnCard(card) {
@@ -384,6 +398,7 @@
       closeBothCards(cardOne, cardTwo) {
         cardOne.classList.remove('card__flipped', 'card__no-events');
         cardTwo.classList.remove('card__flipped');
+        this.cardFlipAudio();
       },
 
       // Print total score
@@ -513,3 +528,6 @@
   // Initializes the whole program
   controller.init();
 }());
+
+
+// Sounds author is www.kenney.nl
