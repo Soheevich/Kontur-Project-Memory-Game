@@ -109,7 +109,7 @@
 
       countingScore(action) {
         if (action === 'plus') {
-          openedPairs += 3;
+          openedPairs += 1;
           score += (numberOfPairs - openedPairs) * 42;
 
           if (openedPairs === numberOfPairs) {
@@ -145,16 +145,10 @@
         );
         const button = this.createElement(
           'button',
-          { className: 'main__new-game' },
+          { className: 'main__new-game', dataTid: 'NewGame-startGame' },
           'Начать игру',
         );
-        const article = this.createElement(
-          'article',
-          { className: 'main__start-screen' },
-          img,
-          title,
-          button,
-        );
+        const article = this.createElement('article', { className: 'main__start-screen', dataTid: 'App' }, img, title, button);
 
         button.addEventListener('click', controller.newGame);
 
@@ -190,8 +184,8 @@
         );
         const button = this.createElement(
           'button',
-          { className: 'main__win-new-game' },
-          'Еще раз',
+          { className: 'main__win-new-game', dataTid: 'EndGame-retryGame' },
+          'Ещё раз',
         );
         const article = this.createElement(
           'article',
@@ -213,6 +207,8 @@
         Object.keys(attrs).forEach((key) => {
           if (key === 'dataId') {
             element.dataset.id = attrs[key];
+          } else if (key === 'dataTid') {
+            element.dataset.tid = attrs[key];
           } else {
             element[key] = attrs[key];
           }
@@ -237,7 +233,7 @@
         if (!document.querySelector('.main__controls')) {
           const resetGameButton = this.createElement(
             'span',
-            { className: 'controls__new-game' },
+            { className: 'controls__new-game', dataTid: 'Menu-newGame' },
             'Начать заново',
           );
           const scoreTitle = this.createElement(
@@ -245,7 +241,10 @@
             { className: 'controls__title' },
             'Очки: ',
           );
-          const score = this.createElement('span', { className: 'controls__score' });
+          const score = this.createElement(
+            'span',
+            { className: 'controls__score', dataTid: 'Menu-scores' },
+          );
           const scoreWrapper = this.createElement(
             'div',
             { className: 'controls__wrapper' },
@@ -268,7 +267,7 @@
 
         const mainCardsGrid = this.createElement(
           'div',
-          { className: 'main__cards-grid' },
+          { className: 'main__cards-grid', dataTid: 'Deck' },
         );
         cardsArray.forEach((card) => {
           const tempCard = this.addCard(card.dataId, card.alt, card.src);
@@ -309,7 +308,7 @@
         );
         const cardBack = this.createElement(
           'div',
-          { className: 'card__back' },
+          { className: 'card__back', dataTid: 'Card-flipped' },
           cardBackIcon,
         );
         const cardFrontIcon = this.createElement(
@@ -328,7 +327,7 @@
         );
         const mainCard = this.createElement(
           'div',
-          { className: 'main__card' },
+          { className: 'main__card', dataTid: 'Card' },
           cardBack,
           cardFront,
         );
@@ -379,7 +378,7 @@
     // Remember to change main.scss => .main__board => grid size
     // ============
     const numberOfPairs = 9;
-    const startTime = 2000; // time to show cards at the start of the game
+    const startTime = 5000; // time to show cards at the start of the game
     const animationTime = 500;
     let activeCard = null;
     let activeCardId = null;
@@ -448,7 +447,7 @@
               setTimeout(() => {
                 canClick = true;
               }, animationTime - 200);
-            }, animationTime);
+            }, animationTime + 200);
           }
 
         // Mark a card as selected one
