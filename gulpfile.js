@@ -22,7 +22,7 @@ gulp.task('svgmin', () =>
     .pipe(svgmin())
     .pipe(gulp.dest('build/images')));
 
-gulp.task('images', () =>
+gulp.task('svgo', () =>
   gulp
     .src('src/images/*.svg')
     .pipe(svgo())
