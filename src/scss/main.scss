@@ -80,12 +80,21 @@ img {
 
 .main__controls {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 1em;
+  width: 712px;
+  justify-content: space-between;
+  margin: 54px auto 20px auto;
+  font-size: $font-reload;
+  font-weight: $font-semibold;
 }
 
 .controls__new-game {
   cursor: pointer;
+  letter-spacing: -0.25px;
+}
+
+.controls__score {
+  font-family: $font-number;
+  font-weight: 400;
 }
 
 .main__cards {
@@ -97,7 +106,7 @@ img {
 .main__cards-grid {
   display: grid;
   grid-template: repeat(3, min-content) / repeat(6, min-content);
-  grid-gap: 1em;
+  grid-gap: 20px;
 }
 
 .main__card-wrapper {

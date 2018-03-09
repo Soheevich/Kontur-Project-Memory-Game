@@ -363,6 +363,7 @@
       resetGame() {
         model.reset();
         view.reset();
+        view.printScore(model.getScore());
         model.makeRandomPairs(numberOfPairs);
         view.newGame(model.getRandomCards(), startTime);
 
@@ -420,6 +421,10 @@
         }
 
         view.printScore(model.getScore());
+      },
+
+      win(score) {
+        view.win(score);
       },
     };
   }());
