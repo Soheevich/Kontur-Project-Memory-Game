@@ -3,18 +3,9 @@ const autoprefixer = require('gulp-autoprefixer');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const pump = require('pump');
-// const uglify = require('gulp-uglify');
-// const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
 const svgmin = require('gulp-svgmin');
-const svgo = require('gulp-svgo');
-const svg2png = require('gulp-svg2png');
-
-gulp.task('svg2png', () => {
-  gulp
-    .src('src/images/card_back.svg')
-    .pipe(svg2png())
-    .pipe(gulp.dest('src/images/'));
-});
 
 gulp.task('svgmin', () =>
   gulp
@@ -22,17 +13,11 @@ gulp.task('svgmin', () =>
     .pipe(svgmin())
     .pipe(gulp.dest('build/images')));
 
-gulp.task('svgo', () =>
-  gulp
-    .src('src/images/*.svg')
-    .pipe(svgo())
-    .pipe(gulp.dest('build/images')));
-
 gulp.task('compress', (cb) => {
   pump(
     [gulp.src('src/scripts/app.js'),
-      // babel({ presets: ['env'] }),
-      // uglify({ output: { quote_style: 1 } }),
+      babel({ presets: ['env'] }),
+      uglify({ output: { quote_style: 1 } }),
       rename({ suffix: '-min' }),
       gulp.dest('build/scripts')],
     cb,

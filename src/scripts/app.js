@@ -14,6 +14,10 @@
     let numberOfPairs;
 
     return {
+      // Creating an array of objects, every object contains:
+      // cardName -> an id of the card (Ace-Hearts)
+      // title -> full name of the card (Ace of Hearts) for alt attribute
+      // src -> source of the image for this card
       init(totalPairs) {
         numberOfPairs = totalPairs;
         cardNames = this.createCardNamesArray();
@@ -44,6 +48,7 @@
         return { dataId, alt, src };
       },
 
+      // Card array could be created manually though
       createCardNamesArray() {
         return (function idArray() {
           const array = [];
@@ -83,6 +88,8 @@
         return Math.floor(Math.random() * (max));
       },
 
+      // This method takes needed number of pairs and then creates an array of random card indexes
+      // Then it shuffles this array
       makeRandomPairs(number) {
         const totalPairs = number * 2;
         const tempArray = [];
@@ -128,12 +135,11 @@
   ================== */
   const view = (function viewAutorun() {
     const mainBoard = document.querySelector('.main__board');
-    let animationTime;
     let scoreSpan;
 
     return {
-      init(time) {
-        animationTime = time;
+      // Building the starting screen
+      init() {
         const img = this.createElement('img', {
           className: 'main__start-image',
           src: 'images/StartGame.png',
@@ -161,6 +167,7 @@
         mainCards.remove();
       },
 
+      // Removing the previous screen and building the final screen
       win(score) {
         const mainControls = document.querySelector('.main__controls');
         const mainCards = document.querySelector('.main__cards');
@@ -201,9 +208,11 @@
         mainBoard.appendChild(article);
       },
 
+      // Method to create any html element and append children to it
       createElement(tag, attrs, ...children) {
         const element = document.createElement(tag);
 
+        // Adding attributes to the element
         Object.keys(attrs).forEach((key) => {
           if (key === 'dataId') {
             element.dataset.id = attrs[key];
@@ -214,6 +223,7 @@
           }
         });
 
+        // Appending children
         children.forEach((child) => {
           let tempChild = child;
           if (typeof tempChild === 'string') {
@@ -225,6 +235,10 @@
         return element;
       },
 
+      // This method launches every new game
+      // If this is the first launch (or launch after a won game) - it removes the previous screen
+      // If this is restarting the second screen, it removes only cards and make a new ones
+      // Also I didn't find a normal card's back image so I had to draw it by myself
       newGame(cardsArray, startTime) {
         const startScreen = document.querySelector('.main__start-screen');
         const winScreen = document.querySelector('.main__win-screen');
@@ -355,6 +369,17 @@
         cardTwo.parentNode.classList.add('fade-out');
       },
 
+      // Shake animation
+      addShake(cardOne, cardTwo) {
+        cardOne.classList.add('shake');
+        cardTwo.classList.add('shake');
+      },
+
+      removeShake(cardOne, cardTwo) {
+        cardOne.classList.remove('shake');
+        cardTwo.classList.remove('shake');
+      },
+
       // Close wrong pair
       closeBothCards(cardOne, cardTwo) {
         cardOne.classList.remove('card__flipped', 'card__no-events');
@@ -390,6 +415,8 @@
         view.init(animationTime);
       },
 
+      // Creates a new game
+      // Disables clicking on cards while they are open at the start of every game
       newGame() {
         canClick = false;
         model.reset();
@@ -440,14 +467,23 @@
             canClick = false;
             model.countingScore('minus');
 
+            // Timeouts to give some time to animations to play
+            // Some animations interacts with each other, so I had to divide them
             setTimeout(() => {
-              view.closeBothCards(activeCard, clickedCard);
-              activeCard = null;
-
+              view.addShake(activeCard, clickedCard);
               setTimeout(() => {
-                canClick = true;
-              }, animationTime - 200);
-            }, animationTime + 200);
+                view.removeShake(activeCard, clickedCard);
+
+                setTimeout(() => {
+                  view.closeBothCards(activeCard, clickedCard);
+                  activeCard = null;
+
+                  setTimeout(() => {
+                    canClick = true;
+                  }, animationTime - 200);
+                }, 100);
+              }, animationTime + 200);
+            }, animationTime);
           }
 
         // Mark a card as selected one
@@ -474,5 +510,6 @@
     };
   }());
 
+  // Initializes the whole program
   controller.init();
 }());
