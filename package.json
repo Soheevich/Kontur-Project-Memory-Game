@@ -34,6 +34,7 @@
     "gulp-svgmin": "^1.2.4",
     "gulp-svgo": "^1.4.0",
     "gulp-uglify": "^3.0.0",
+    "jest": "^22.4.2",
     "pump": "^3.0.0"
   },
   "dependencies": {}

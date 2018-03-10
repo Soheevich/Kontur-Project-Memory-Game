@@ -1,1 +1,533 @@
-'use strict';!function(){var e,a,t,n,r,i,c,s,o,d,m,l,u=(e=[],a=[],t=0,n=0,r=void 0,{init:function(a){var t=this;r=a,this.createCardNamesArray().forEach(function(a){var n=a.split('-').join(' of '),r=t.createCardFilenames(a),i=t.createCard(a,n,r);e.push(i)})},reset:function(){a=[],t=0,n=0},getRandomCards:function(){return a},getScore:function(){return t},createCard:function(e,a,t){return{dataId:e,alt:a,src:t}},createCardNamesArray:function(){return e=[],['Clubs','Diamonds','Hearts','Spades'].forEach(function(a){for(var t=1;t<14;t+=1)switch(t){case 1:e.push('Ace-'+a);break;case 11:e.push('Jack-'+a);break;case 12:e.push('Queen-'+a);break;case 13:e.push('King-'+a);break;default:e.push(t+'-'+a)}}),e;var e},createCardFilenames:function(e){return'images/'+e+'.svg'},makeRandomNumber:function(e){return Math.floor(Math.random()*e)},makeRandomPairs:function(t){for(var n=2*t,r=[];r.length<n;){var i=this.makeRandomNumber(52);r.includes(i)||r.push(i,i)}for(var c=r.length-1;c>0;c-=1){var s=this.makeRandomNumber(c+1),o=r[c];r[c]=r[s],r[s]=o}r.forEach(function(t){a.push(e[t])})},countingScore:function(e){'plus'===e?(t+=42*(r-(n+=1)),n===r&&f.win()):'minus'===e&&(t-=42*n)}}),_=(i=document.querySelector('.main__board'),c=document.querySelector('audio'),s=void 0,{init:function(){var e=this.createElement('img',{className:'main__start-image',src:'images/StartGame.png'}),a=this.createElement('h1',{className:'main__title'},'memory game'),t=this.createElement('button',{className:'main__new-game',dataTid:'NewGame-startGame'},'Начать игру'),n=this.createElement('article',{className:'main__start-screen',dataTid:'App'},e,a,t);t.addEventListener('click',f.newGame),i.appendChild(n)},reset:function(){document.querySelector('.main__cards').remove()},win:function(e){var a=document.querySelector('.main__controls'),t=document.querySelector('.main__cards');a.remove(),t.remove();var n=this.createElement('img',{className:'main__win-image',src:'images/Group 2.png'}),r=this.createElement('p',{className:'main__win-title'},'Поздравляем!'),c=this.createElement('p',{className:'main__win-title'},'Ваш итоговый счет: '+e),s=this.createElement('button',{className:'main__win-new-game',dataTid:'EndGame-retryGame'},'Ещё раз'),o=this.createElement('article',{className:'main__win-screen'},n,r,c,s);s.addEventListener('click',f.newGame),i.appendChild(o)},createElement:function(e,a){var t=document.createElement(e);Object.keys(a).forEach(function(e){'dataId'===e?t.dataset.id=a[e]:'dataTid'===e?t.dataset.tid=a[e]:t[e]=a[e]});for(var n=arguments.length,r=Array(n>2?n-2:0),i=2;i<n;i++)r[i-2]=arguments[i];return r.forEach(function(e){var a=e;'string'==typeof a&&(a=document.createTextNode(e)),t.appendChild(a)}),t},newGame:function(e,a){var t=this,n=document.querySelector('.main__start-screen'),r=document.querySelector('.main__win-screen'),c=document.createDocumentFragment();if(!document.querySelector('.main__controls')){var o=this.createElement('span',{className:'controls__new-game',dataTid:'Menu-newGame'},'Начать заново'),d=this.createElement('span',{className:'controls__title'},'Очки: '),m=this.createElement('span',{className:'controls__score',dataTid:'Menu-scores'}),l=this.createElement('div',{className:'controls__wrapper'},d,m),u=this.createElement('section',{className:'main__controls'},o,l);o.addEventListener('click',f.resetGame),c.appendChild(u)}n&&n.remove(),r&&r.remove();var _=this.createElement('div',{className:'main__cards-grid',dataTid:'Deck'});e.forEach(function(e){var a=t.addCard(e.dataId,e.alt,e.src);_.appendChild(a)});var h=this.createElement('section',{className:'main__cards'},_);c.appendChild(h),i.appendChild(c),s=document.querySelector('.controls__score'),document.querySelectorAll('.main__card').forEach(function(e){e.addEventListener('click',f.onCardClick),setTimeout(function(){e.classList.add('card__flipped'),setTimeout(function(){e.classList.remove('card__flipped')},a)},100)}),this.cardFlipAudio(),setTimeout(function(){t.cardFlipAudio()},a)},addCard:function(e,a,t){var n=this.createElement('img',{src:'images/card_back.svg',alt:'Back of the card'}),r=this.createElement('div',{className:'card__back',dataTid:'Card-flipped'},n),i=this.createElement('img',{className:'card__icon',dataId:e,src:t,alt:a}),c=this.createElement('div',{className:'card__front'},i),s=this.createElement('div',{className:'main__card',dataTid:'Card'},r,c);return this.createElement('div',{className:'main__card-wrapper'},s)},cardFlipAudio:function(){c.currentTime=0,c.play()},openCard:function(e){e.target.classList.add('card__flipped'),this.cardFlipAudio()},noEventsOnCard:function(e){e.classList.add('card__no-events')},fadeOutPair:function(e,a){e.parentNode.classList.add('fade-out'),a.parentNode.classList.add('fade-out')},addShake:function(e,a){e.classList.add('shake'),a.classList.add('shake')},removeShake:function(e,a){e.classList.remove('shake'),a.classList.remove('shake')},closeBothCards:function(e,a){e.classList.remove('card__flipped','card__no-events'),a.classList.remove('card__flipped'),this.cardFlipAudio()},printScore:function(e){s.textContent=e}}),f=(o=500,d=null,m=null,l=!0,{init:function(){u.init(9),_.init(o)},newGame:function(){l=!1,u.reset(),u.makeRandomPairs(9),_.newGame(u.getRandomCards(),5e3),_.printScore(u.getScore()),setTimeout(function(){l=!0},5750)},resetGame:function(){u.reset(),_.reset(),_.printScore(u.getScore()),u.makeRandomPairs(9),_.newGame(u.getRandomCards(),5e3),d=null,m=null,l=!0},onCardClick:function(e){var a=e.target,t=a.querySelector('.card__icon').dataset.id;d&&l?(_.openCard(e),m===t?(l=!1,u.countingScore('plus'),setTimeout(function(){_.fadeOutPair(d,a),d=null,setTimeout(function(){l=!0},300)},o)):(l=!1,u.countingScore('minus'),setTimeout(function(){_.addShake(d,a),setTimeout(function(){_.removeShake(d,a),setTimeout(function(){_.closeBothCards(d,a),d=null,setTimeout(function(){l=!0},300)},100)},700)},o))):l&&(_.openCard(e),d=a,_.noEventsOnCard(d),m=d.querySelector('.card__icon').dataset.id,l=!1,setTimeout(function(){l=!0},200)),_.printScore(u.getScore())},win:function(){setTimeout(function(){_.win(u.getScore())},1250)}});f.init()}();
+/* eslint-env browser */
+
+// My first attempt with MVC pattern
+(function autorun() {
+  /* =================
+  MODEL
+  ================== */
+  const model = (function modelAutorun() {
+    const deck = [];
+    let cardNames;
+    let randomCards = [];
+    let score = 0;
+    let openedPairs = 0;
+    let numberOfPairs;
+
+    return {
+      // Creating an array of objects, every object contains:
+      // cardName -> an id of the card (Ace-Hearts)
+      // title -> full name of the card (Ace of Hearts) for alt attribute
+      // src -> source of the image for this card
+      init(totalPairs) {
+        numberOfPairs = totalPairs;
+        cardNames = this.createCardNamesArray();
+        cardNames.forEach((cardName) => {
+          const title = cardName.split('-').join(' of ');
+          const src = this.createCardFilenames(cardName);
+          const temporaryCard = this.createCard(cardName, title, src);
+
+          deck.push(temporaryCard);
+        });
+      },
+
+      reset() {
+        randomCards = [];
+        score = 0;
+        openedPairs = 0;
+      },
+
+      getRandomCards() {
+        return randomCards;
+      },
+
+      getScore() {
+        return score;
+      },
+
+      createCard(dataId, alt, src) {
+        return { dataId, alt, src };
+      },
+
+      // Card array could be created manually though
+      createCardNamesArray() {
+        return (function idArray() {
+          const array = [];
+          const suites = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
+          suites.forEach((suite) => {
+            for (let i = 1; i < 14; i += 1) {
+              switch (i) {
+                case 1:
+                  array.push(`Ace-${suite}`);
+                  break;
+                case 11:
+                  array.push(`Jack-${suite}`);
+                  break;
+                case 12:
+                  array.push(`Queen-${suite}`);
+                  break;
+                case 13:
+                  array.push(`King-${suite}`);
+                  break;
+                default:
+                  array.push(`${i}-${suite}`);
+                  break;
+              }
+            }
+          });
+
+          return array;
+        }());
+      },
+
+      createCardFilenames(inputName) {
+        const outputFilename = `images/${inputName}.svg`;
+        return outputFilename;
+      },
+
+      makeRandomNumber(max) {
+        return Math.floor(Math.random() * (max));
+      },
+
+      // This method takes needed number of pairs and then creates an array of random card indexes
+      // Then it shuffles this array
+      makeRandomPairs(number) {
+        const totalPairs = number * 2;
+        const tempArray = [];
+
+        while (tempArray.length < totalPairs) {
+          const tempRandomCardIndex = this.makeRandomNumber(52);
+
+          if (!tempArray.includes(tempRandomCardIndex)) {
+            tempArray.push(tempRandomCardIndex, tempRandomCardIndex);
+          }
+        }
+
+        for (let i = tempArray.length - 1; i > 0; i -= 1) {
+          const j = this.makeRandomNumber(i + 1);
+          const temp = tempArray[i];
+          tempArray[i] = tempArray[j];
+          tempArray[j] = temp;
+        }
+
+        tempArray.forEach((cardIndex) => {
+          randomCards.push(deck[cardIndex]);
+        });
+      },
+
+      countingScore(action) {
+        if (action === 'plus') {
+          openedPairs += 1;
+          score += (numberOfPairs - openedPairs) * 42;
+
+          if (openedPairs === numberOfPairs) {
+            controller.win();
+          }
+        } else if (action === 'minus') {
+          score -= openedPairs * 42;
+        }
+      },
+    };
+  }());
+
+
+  /* =================
+  VIEW
+  ================== */
+  const view = (function viewAutorun() {
+    const mainBoard = document.querySelector('.main__board');
+    const audio = document.querySelector('audio');
+    let scoreSpan;
+
+    return {
+      // Building the starting screen
+      init() {
+        const img = this.createElement('img', {
+          className: 'main__start-image',
+          src: 'images/StartGame.png',
+        });
+        const title = this.createElement(
+          'h1',
+          { className: 'main__title' },
+          'memory game',
+        );
+        const button = this.createElement(
+          'button',
+          { className: 'main__new-game', dataTid: 'NewGame-startGame' },
+          'Начать игру',
+        );
+        const article = this.createElement('article', { className: 'main__start-screen', dataTid: 'App' }, img, title, button);
+
+        button.addEventListener('click', controller.newGame);
+
+        mainBoard.appendChild(article);
+      },
+
+      reset() {
+        const mainCards = document.querySelector('.main__cards');
+
+        mainCards.remove();
+      },
+
+      // Removing the previous screen and building the final screen
+      win(score) {
+        const mainControls = document.querySelector('.main__controls');
+        const mainCards = document.querySelector('.main__cards');
+
+        mainControls.remove();
+        mainCards.remove();
+
+        const img = this.createElement('img', {
+          className: 'main__win-image',
+          src: 'images/Group 2.png',
+        });
+        const title = this.createElement(
+          'p',
+          { className: 'main__win-title' },
+          'Поздравляем!',
+        );
+        const titleSecond = this.createElement(
+          'p',
+          { className: 'main__win-title' },
+          `Ваш итоговый счет: ${score}`,
+        );
+        const button = this.createElement(
+          'button',
+          { className: 'main__win-new-game', dataTid: 'EndGame-retryGame' },
+          'Ещё раз',
+        );
+        const article = this.createElement(
+          'article',
+          { className: 'main__win-screen' },
+          img,
+          title,
+          titleSecond,
+          button,
+        );
+
+        button.addEventListener('click', controller.newGame);
+
+        mainBoard.appendChild(article);
+      },
+
+      // Method to create any html element and append children to it
+      createElement(tag, attrs, ...children) {
+        const element = document.createElement(tag);
+
+        // Adding attributes to the element
+        Object.keys(attrs).forEach((key) => {
+          if (key === 'dataId') {
+            element.dataset.id = attrs[key];
+          } else if (key === 'dataTid') {
+            element.dataset.tid = attrs[key];
+          } else {
+            element[key] = attrs[key];
+          }
+        });
+
+        // Appending children
+        children.forEach((child) => {
+          let tempChild = child;
+          if (typeof tempChild === 'string') {
+            tempChild = document.createTextNode(child);
+          }
+          element.appendChild(tempChild);
+        });
+
+        return element;
+      },
+
+      // This method launches every new game
+      // If this is the first launch (or launch after a won game) - it removes the previous screen
+      // If this is restarting the second screen, it removes only cards and make a new ones
+      // Also I didn't find a normal card's back image so I had to draw it by myself
+      newGame(cardsArray, startTime) {
+        const startScreen = document.querySelector('.main__start-screen');
+        const winScreen = document.querySelector('.main__win-screen');
+        const fragment = document.createDocumentFragment();
+
+        if (!document.querySelector('.main__controls')) {
+          const resetGameButton = this.createElement(
+            'span',
+            { className: 'controls__new-game', dataTid: 'Menu-newGame' },
+            'Начать заново',
+          );
+          const scoreTitle = this.createElement(
+            'span',
+            { className: 'controls__title' },
+            'Очки: ',
+          );
+          const score = this.createElement(
+            'span',
+            { className: 'controls__score', dataTid: 'Menu-scores' },
+          );
+          const scoreWrapper = this.createElement(
+            'div',
+            { className: 'controls__wrapper' },
+            scoreTitle,
+            score,
+          );
+          const controls = this.createElement(
+            'section',
+            { className: 'main__controls' },
+            resetGameButton,
+            scoreWrapper,
+          );
+
+          resetGameButton.addEventListener('click', controller.resetGame);
+          fragment.appendChild(controls);
+        }
+
+        if (startScreen) startScreen.remove();
+        if (winScreen) winScreen.remove();
+
+        const mainCardsGrid = this.createElement(
+          'div',
+          { className: 'main__cards-grid', dataTid: 'Deck' },
+        );
+        cardsArray.forEach((card) => {
+          const tempCard = this.addCard(card.dataId, card.alt, card.src);
+
+          mainCardsGrid.appendChild(tempCard);
+        });
+        const mainCards = this.createElement(
+          'section',
+          { className: 'main__cards' },
+          mainCardsGrid,
+        );
+
+        fragment.appendChild(mainCards);
+        mainBoard.appendChild(fragment);
+        scoreSpan = document.querySelector('.controls__score');
+
+        // Show all cards at the start of every new game
+        // Add click event listeners to every card
+        document.querySelectorAll('.main__card').forEach((card) => {
+          card.addEventListener('click', controller.onCardClick);
+
+          setTimeout(() => {
+            card.classList.add('card__flipped');
+            setTimeout(() => {
+              card.classList.remove('card__flipped');
+            }, startTime);
+          }, 100);
+        });
+
+        // Play audio on opening all of the cards
+        this.cardFlipAudio();
+        setTimeout(() => {
+          this.cardFlipAudio();
+        }, startTime);
+      },
+
+      addCard(dataId, alt, src) {
+        const cardBackIcon = this.createElement(
+          'img',
+          {
+            src: 'images/card_back.svg',
+            alt: 'Back of the card',
+          },
+        );
+        const cardBack = this.createElement(
+          'div',
+          { className: 'card__back', dataTid: 'Card-flipped' },
+          cardBackIcon,
+        );
+        const cardFrontIcon = this.createElement(
+          'img',
+          {
+            className: 'card__icon',
+            dataId,
+            src,
+            alt,
+          },
+        );
+        const cardFront = this.createElement(
+          'div',
+          { className: 'card__front' },
+          cardFrontIcon,
+        );
+        const mainCard = this.createElement(
+          'div',
+          { className: 'main__card', dataTid: 'Card' },
+          cardBack,
+          cardFront,
+        );
+        const mainCardWrapper = this.createElement(
+          'div',
+          { className: 'main__card-wrapper' },
+          mainCard,
+        );
+
+        return mainCardWrapper;
+      },
+
+      // Audio
+      cardFlipAudio() {
+        audio.currentTime = 0;
+        audio.play();
+      },
+
+      // Open clicked card
+      openCard(event) {
+        event.target.classList.add('card__flipped');
+        this.cardFlipAudio();
+      },
+
+      noEventsOnCard(card) {
+        card.classList.add('card__no-events');
+      },
+
+      // Fade out selected pair
+      fadeOutPair(cardOne, cardTwo) {
+        cardOne.parentNode.classList.add('fade-out');
+        cardTwo.parentNode.classList.add('fade-out');
+      },
+
+      // Shake animation
+      addShake(cardOne, cardTwo) {
+        cardOne.classList.add('shake');
+        cardTwo.classList.add('shake');
+      },
+
+      removeShake(cardOne, cardTwo) {
+        cardOne.classList.remove('shake');
+        cardTwo.classList.remove('shake');
+      },
+
+      // Close wrong pair
+      closeBothCards(cardOne, cardTwo) {
+        cardOne.classList.remove('card__flipped', 'card__no-events');
+        cardTwo.classList.remove('card__flipped');
+        this.cardFlipAudio();
+      },
+
+      // Print total score
+      printScore(number) {
+        scoreSpan.textContent = number;
+      },
+    };
+  }());
+
+
+  /* =================
+  CONTROLLER
+  ================== */
+  const controller = (function controllerAutorun() {
+    // ============
+    // Total number of shown pairs of cards can be changed
+    // Remember to change main.scss => .main__board => grid size
+    // ============
+    const numberOfPairs = 9;
+    const startTime = 5000; // time to show cards at the start of the game
+    const animationTime = 500;
+    let activeCard = null;
+    let activeCardId = null;
+    let canClick = true; // to prevent clicking on another cards while animation
+
+    return {
+      init() {
+        model.init(numberOfPairs);
+        view.init(animationTime);
+      },
+
+      // Creates a new game
+      // Disables clicking on cards while they are open at the start of every game
+      newGame() {
+        canClick = false;
+        model.reset();
+        model.makeRandomPairs(numberOfPairs);
+        view.newGame(model.getRandomCards(), startTime);
+        view.printScore(model.getScore());
+
+        setTimeout(() => {
+          canClick = true;
+        }, startTime + (animationTime * 1.5));
+      },
+
+      resetGame() {
+        model.reset();
+        view.reset();
+        view.printScore(model.getScore());
+        model.makeRandomPairs(numberOfPairs);
+        view.newGame(model.getRandomCards(), startTime);
+
+        activeCard = null;
+        activeCardId = null;
+        canClick = true;
+      },
+
+      onCardClick(event) {
+        const clickedCard = event.target;
+        const clickedCardId = clickedCard.querySelector('.card__icon').dataset.id;
+
+        if (activeCard && canClick) {
+          view.openCard(event);
+
+          // Found a pair
+          if (activeCardId === clickedCardId) {
+            canClick = false;
+            model.countingScore('plus');
+
+            setTimeout(() => {
+              view.fadeOutPair(activeCard, clickedCard);
+              activeCard = null;
+
+              setTimeout(() => {
+                canClick = true;
+              }, animationTime - 200);
+            }, animationTime);
+
+          // Wrong pair, remove selection from the both cards
+          } else {
+            canClick = false;
+            model.countingScore('minus');
+
+            // Timeouts to give some time to animations to play
+            // Some animations interacts with each other, so I had to divide them
+            setTimeout(() => {
+              view.addShake(activeCard, clickedCard);
+              setTimeout(() => {
+                view.removeShake(activeCard, clickedCard);
+
+                setTimeout(() => {
+                  view.closeBothCards(activeCard, clickedCard);
+                  activeCard = null;
+
+                  setTimeout(() => {
+                    canClick = true;
+                  }, animationTime - 200);
+                }, 100);
+              }, animationTime + 200);
+            }, animationTime);
+          }
+
+        // Mark a card as selected one
+        } else if (canClick) {
+          view.openCard(event);
+          activeCard = clickedCard;
+          view.noEventsOnCard(activeCard);
+          activeCardId = activeCard.querySelector('.card__icon').dataset.id;
+          canClick = false;
+
+          setTimeout(() => {
+            canClick = true;
+          }, animationTime - 300);
+        }
+
+        view.printScore(model.getScore());
+      },
+
+      win() {
+        setTimeout(() => {
+          view.win(model.getScore());
+        }, (animationTime * 2.5));
+      },
+    };
+  }());
+
+  // Initializes the whole program
+  controller.init();
+}());
+
+
+// Sounds author is www.kenney.nl
