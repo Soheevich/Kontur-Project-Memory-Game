@@ -1,21 +1,21 @@
 {
   "name": "memory-game",
   "version": "1.0.0",
-  "description": "Udacity Front End Nanodegree project",
+  "description": "Testing project for Kontur",
   "main": "app.js",
   "scripts": {
     "start": "gulp"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Soheevich/Udacity-Project-Memory-Game.git"
+    "url": "git+https://github.com/Soheevich/Kontur-Project-Memory-Game.git"
   },
   "author": "Andrei Filyaev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Soheevich/Udacity-Project-Memory-Game/issues"
+    "url": "https://github.com/Soheevich/Kontur-Project-Memory-Game/issues"
   },
-  "homepage": "https://github.com/Soheevich/Udacity-Project-Memory-Game#readme",
+  "homepage": "https://github.com/Soheevich/Kontur-Project-Memory-Game#readme",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
